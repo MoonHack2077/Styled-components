@@ -1,8 +1,14 @@
+import { Container , Xd } from './styles.js';
 
 function App() {
   return (
-    <div className="App">
-    </div>
+    <Container>
+      <Xd/>
+      <Xd/>
+      <Xd/>
+      <Xd/>
+      <Xd/>
+    </Container>
   );
 }
 
