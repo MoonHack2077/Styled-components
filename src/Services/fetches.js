@@ -1,6 +1,6 @@
-const API_URL = 'https://www.metaweather.com/api/location';
+import { API_URL } from '../API.js';
 
-const fetchData = async url =>{
+const fetchData = async url => {
     const response = await fetch(url);
     const data = await response.json();
     return data;
@@ -16,9 +16,7 @@ export const locationId = async id => {
     return await fetchData(url);
 }
 
-export const locationDate = async (id , date) => {
+export const locationDate = async ( id , date ) => {
     const url = `${API_URL}/${id}/${date}`;
     return await fetchData(url);
 }
-
-
