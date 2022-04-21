@@ -9,18 +9,23 @@ function Home(){
 
     const fetched = () =>{
         locationSearch(london)
-        .then(setCity)
+        .then(res => {
+            console.log(res);
+                setCity(res)
+            })
         .catch(console.log)
     }
+
     useEffect(()=>{
-        fetched();
+        setCity(locationSearch(london));
     },[])
+
     return(
         <Main>
             <City>
                 <ul>
-                    <li>{city}</li>
-                    <li>{city}</li>
+                    <li>{city.title}</li>
+                    <li>{city.title}</li>
                 </ul>
             </City>
             <Others>
