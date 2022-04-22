@@ -10,14 +10,13 @@ function Home(){
     const fetched = () =>{
         locationSearch(london)
         .then(res => {
-            console.log(res);
-                setCity(res)
-            })
+            setCity(res[0])
+        })
         .catch(console.log)
     }
 
     useEffect(()=>{
-        setCity(locationSearch(london));
+        fetched();
     },[])
 
     return(
