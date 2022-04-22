@@ -1,9 +1,11 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , Others } from './Home.style.js';
+import { Main , City , Search , BackgroundImg , Others } from './Home.style.js';
 
 import { locationSearch } from '../../Services/fetches.js';
+const clouds = new URL('../../Assets/Cloud-background.png', import.meta.url);
 
 function Home(){
+    //latt_long , location_type , title , woeid
     const [ city , setCity ] = useState({});
     const london = 'london';
 
@@ -21,11 +23,9 @@ function Home(){
 
     return(
         <Main>
-            <City>
-                <ul>
-                    <li>{city.title}</li>
-                    <li>{city.title}</li>
-                </ul>
+            <City style={{backgroundImage:'../../Assets/Cloud-background.png'}} >
+                <BackgroundImg src={clouds} />
+                <Search bg_color='#777'>Search for places</Search>
             </City>
             <Others>
                 XDD
