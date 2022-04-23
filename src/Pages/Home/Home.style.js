@@ -29,8 +29,10 @@ export const BackgroundImg = styled.img`
     position: absolute;
     width: 100%;
     height: 100%;
-    z-index: 1000;
-    opacity: .9;
+    /* z-index: 1000; */
+    opacity: .5;
+    /* transform: scale(.9); */
+    /* filter: grayScale(.5); */
 `
 
 export const Others = styled.section`

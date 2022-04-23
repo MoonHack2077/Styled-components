@@ -1,8 +1,9 @@
 import React , { useState , useEffect } from 'react';
 import { Main , City , Search , BackgroundImg , Others } from './Home.style.js';
+import { turnToUrl } from '../../Helpers/turnToUrl.js'
 
 import { locationSearch } from '../../Services/fetches.js';
-const clouds = new URL('../../Assets/Cloud-background.png', import.meta.url);
+const clouds = turnToUrl('../../Assets/Cloud-background.png');
 
 function Home(){
     //latt_long , location_type , title , woeid
