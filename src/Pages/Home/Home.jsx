@@ -1,5 +1,5 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , Search , WeatherImages , StateImg , Details , StyledSpan , Others } from './Home.style.js';
+import { Main , City , Search , WeatherImages , StateImg , Details , StyledSpan , StyledH2 , StyledH3 , Others } from './Home.style.js';
 
 import { locationSearch , locationId } from '../../Services/fetches.js';
 import { getImage } from '../Home/Helpers/getImage.js';
@@ -35,10 +35,10 @@ function Home(){
                     <StateImg src={getImage(data.weather_state_abbr)}/>
                 </WeatherImages>
                 <Details>
-                    <StyledSpan fz='Ypx'>temperature C</StyledSpan>
-                    <StyledSpan fz='Ypx'>weather</StyledSpan>
-                    <StyledSpan fz='Ypx'>day - date</StyledSpan>
-                    <StyledSpan fz='Ypx'>icon - city - parent</StyledSpan>
+                    <StyledSpan fz='30px'>temperature °C</StyledSpan>
+                    <StyledH2 fz='1.5rem'>weather</StyledH2>
+                    <StyledH3 fz='Ypx'>day - date</StyledH3>
+                    <StyledH3 fz='Ypx'>icon - city , parent</StyledH3>
                 </Details>
             </City>
             <Others>
