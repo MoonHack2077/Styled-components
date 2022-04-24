@@ -17,7 +17,7 @@ export const Main = styled.div`
 export const City = styled.aside`
     position: relative;
     width: 100%;
-    height: 50%;
+    // height: 50%;
     background-color: ${ primaryColor };
 `
 export const Search = styled.button`
@@ -25,14 +25,27 @@ export const Search = styled.button`
     color: ${ textColor };
     background-color: ${( { bg_color } ) => bg_color};
 `
-export const BackgroundImg = styled.img`
-    position: absolute;
+export const WeatherImages = styled.div`
+    display: grid;
+    place-items: center;
     width: 100%;
-    height: 100%;
-    /* z-index: 1000; */
-    opacity: .5;
-    /* transform: scale(.9); */
-    /* filter: grayScale(.5); */
+    height: 50%;
+    background-image: url(${ ({bg_img}) => bg_img });
+    filter: grayscale(.5);
+`
+export const StateImg = styled.img`
+    width: 100px;
+    height: 100px;
+    filter: grayScale(0); 
+`
+export const Details = styled.div`
+    width: 100%;
+    height: 50%;
+    text-align: center;
+`
+export const StyledSpan = styled.span`
+    color: ${ textColor };
+    font-size: ${ ({ fz })=> fz }
 `
 
 export const Others = styled.section`
