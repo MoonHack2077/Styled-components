@@ -1,8 +1,14 @@
-import React from 'react'
+import React from 'react';
+import { Container , Type , Data , DataNumber } from './Status.style.js';
 
 function Status() {
   return (
-    <div>Status</div>
+      <Container>
+        <Type>{'prop'}</Type>
+        <Data>
+          <DataNumber>{'prop.number'}</DataNumber>{'prop.measure'}
+        </Data>
+      </Container>
   )
 }
 
