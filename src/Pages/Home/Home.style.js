@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import { primaryColor , backgroundColor, textColor } from '../../constants.js';
 
-//MOBILE FIRST
-
-export const Main = styled.div`
+export const Main = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,10 +18,32 @@ export const City = styled.aside`
     // height: 50%;
     background-color: ${ primaryColor };
 `
-export const Search = styled.button`
+export const SearchCity = styled.aside`
+    position: absolute;
+    width: 100%;
+    // height: 50%;
+    padding: 20px;
+    background-color: ${ primaryColor };
+`
+export const SearchForm = styled.form`
+    padding: 8px;
+    background-color: #000;
+`
+export const SearchInput = styled.input`
     padding: 8px;
     color: ${ textColor };
     background-color: ${( { bg_color } ) => bg_color};
+`
+export const SearchButton = styled.input`
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 8px;
+    color: ${ textColor };
+    background-color: ${( { bg_color } ) => bg_color};
+`
+export const RecentSearches = styled.ul`
+    margin: 0;
 `
 export const WeatherImages = styled.div`
     display: grid;
@@ -60,10 +80,20 @@ export const StyledH3 = styled.h3`
 
 
 
-export const Others = styled.section`
+export const Stats = styled.section`
     width: 100%;
     outline: 1px solid red;
     /* height: 100%; */
     margin: 100px;
     background-color: #000
+`
+export const Days = styled.section`
+    display: flex;
+    width: 100%;
+    height: 50%;
+`
+export const StatusContainer = styled.section`
+    display: flex;
+    width: 100%;
+    height: 50%;
 `
