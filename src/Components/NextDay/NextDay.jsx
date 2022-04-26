@@ -1,12 +1,12 @@
 import React from 'react'
 import { Container, StateImg , Span } from './NextDay.style.js'
 
-function NextDay() {
+function NextDay( { date , min_temp , max_temp , img } ) {
   return (
     <Container>
-      <Span>{'day'}</Span>
-      <StateImg src={''} />
-      <Span>{'temperature'}</Span>
+      <Span>{ date }</Span>
+      <StateImg src={ img } />
+      <Span><Span className='maxTemp'>{ max_temp }</Span>{ min_temp }</Span>
     </Container>
   )
 }

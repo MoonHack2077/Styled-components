@@ -8,6 +8,7 @@ export const Container = styled.div`
     align-items: center;
     width: 200px;
     height: 300px;
+    gap: 8px;
     background-color: ${ primaryColor };
     color: ${ textColor }
 `
@@ -16,5 +17,10 @@ export const StateImge = styled.img`
     height: 90px;
 `
 export const Span = styled.span`
-    font-size: medium;
+    font-size: 20px;
+
+    &.maxTemp{
+        font-weight: bold;
+        font-size: 22px;
+    }
 `

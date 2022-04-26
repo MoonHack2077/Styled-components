@@ -40,7 +40,7 @@ function Home(){
     const fetched = () =>{
         locationSearch(london)
         .then(res => {
-            const nextDays = res.consolidated_weather;
+            const nextDays = [, ...res.consolidated_weather ];
             const today = nextDays[0];
             const img = getImage(today.weather_state_abbr);
             setDays(nextDays);
@@ -104,8 +104,8 @@ function Home(){
                             date={ day.applicable_date } 
                             min_temp={ day.min_temp }
                             max_temp={ day.max_temp } 
-                            img={ img }/
-                        >
+                            img={ img }
+                         />
                     } ) }
                 </Days>
 
