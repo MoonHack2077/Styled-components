@@ -26,25 +26,52 @@ export const SearchCity = styled.aside`
     background-color: ${ primaryColor };
 `
 export const SearchForm = styled.form`
-    padding: 8px;
+    display: flex;
+    width: 100%;
+    // padding: 8px;
     background-color: #000;
 `
 export const SearchInput = styled.input`
+    width: 300px;
     padding: 8px;
+    outline: 1px solid ${ textColor };
     color: ${ textColor };
-    background-color: ${( { bg_color } ) => bg_color};
+    background-color: transparent;
 `
 export const SearchButton = styled.input`
-    position: absolute;
-    top: 20px;
-    left: 20px;
     padding: 8px;
     color: ${ textColor };
     background-color: ${( { bg_color } ) => bg_color};
+
+    &.toggleButton{
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+
+    // &.inputForm{
+
+    // }
 `
 export const RecentSearches = styled.ul`
+    width: 100%;
     margin: 0;
 `
+export const Searched = styled.li`
+    width: 100%;
+
+    &.arrow{
+        display: none;
+    }
+
+    &:hover{
+        outline: 1px solid ${ textColor };  
+        &.arrow{
+            display: inline;
+        }
+    }
+`
+
 export const WeatherImages = styled.div`
     display: grid;
     place-items: center;
@@ -63,7 +90,7 @@ export const Details = styled.div`
     height: 70%;
     text-align: center;
 `
-export const StyledSpan = styled.span`
+export const Span = styled.span`
     /* color: ${ textColor }; */
     display: inline-block;
     margin: 20px 0;

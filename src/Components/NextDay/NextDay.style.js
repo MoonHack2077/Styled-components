@@ -15,6 +15,6 @@ export const StateImge = styled.img`
     width: 90px;
     height: 90px;
 `
-export const StyledSpan = styled.span`
+export const Span = styled.span`
     font-size: medium;
 `

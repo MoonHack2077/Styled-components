@@ -1,12 +1,12 @@
 import React from 'react'
-import { Container, StateImg , StyledSpan } from './NextDay.style.js'
+import { Container, StateImg , Span } from './NextDay.style.js'
 
 function NextDay() {
   return (
     <Container>
-      <StyledSpan>{'day'}</StyledSpan>
+      <Span>{'day'}</Span>
       <StateImg src={''} />
-      <StyledSpan>{'temperature'}</StyledSpan>
+      <Span>{'temperature'}</Span>
     </Container>
   )
 }

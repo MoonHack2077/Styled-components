@@ -1,12 +1,12 @@
 import React from 'react';
 import { Container , Type , Data , DataNumber } from './Status.style.js';
 
-function Status() {
+function Status( { type , measure } ) {
   return (
       <Container>
-        <Type>{'prop'}</Type>
+        <Type>{ type }</Type>
         <Data>
-          <DataNumber>{'prop.number'}</DataNumber>{'prop.measure'}
+          <DataNumber>{ type }</DataNumber>{ measure }
         </Data>
       </Container>
   )
