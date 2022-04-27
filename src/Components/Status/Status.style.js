@@ -2,10 +2,15 @@ import styled from 'styled-components'
 import { primaryColor , textColor } from '../../constants.js';
 
 export const Container = styled.div`
-    width: 500px;
-    /* height: 300px; */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    max-width: 300px;
+    min-height: 200px;
     padding: 10px 30px;
+    outline: 1px solid blue;
     text-align: center;
+    border-radius: 20px;
     background-color: ${ primaryColor };
 `
 export const Type = styled.h2`

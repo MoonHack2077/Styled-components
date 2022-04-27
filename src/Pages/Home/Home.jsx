@@ -1,10 +1,11 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
+import { Main , City , BackImg , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
 
-import { locationSearch } from '../../Services/fetches.js';
-import { getImage } from '../Home/Helpers/getImage.js';
+import { locationSearch , locationId } from '../../Services/fetches.js';
+import { getImage } from '../../Helpers/getImage.js';
+import { fixed } from '../../Helpers/fixed.js';
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +17,8 @@ function Home(){
     const [ city , setCity ] = useState({});
     const [ search , setSearch ] = useState('');
     const [ recentSearches , setRecentSearches ] = useState([]);
-    const london = 'london';
+    const [ loading , setLoading ] = useState(false);
+    const london = 'san';
 
     const foo = e => {
         setSearch(e.target.value);
@@ -38,18 +40,25 @@ function Home(){
     }
 
     const fetched = () =>{
+        setLoading(true);
         locationSearch(london)
         .then(res => {
-            const nextDays = [, ...res.consolidated_weather ];
-            const today = nextDays[0];
-            const img = getImage(today.weather_state_abbr);
-            setDays(nextDays);
-            setCity({ 
-                title: res.title ,  
-                parent: res.parent.title , 
-                state_img: img, 
-                ...today 
-            });
+            console.log(res[0]);
+            locationId(res[0].woeid)
+            .then(resolve => {
+                const nextDays = [ ...resolve.consolidated_weather ];
+                const today = resolve.consolidated_weather[0];
+                const img = getImage(today.weather_state_abbr);
+                setDays(nextDays.slice(1));
+                setCity({ 
+                    title: resolve.title ,  
+                    parent: resolve.parent.title , 
+                    state_img: img,
+                    the_temp: fixed(today.the_temp) ,
+                    ...today 
+                });
+                setLoading(false);
+            })
         })
         .catch(console.log)
     }
@@ -59,14 +68,15 @@ function Home(){
     },[])
 
     return(
-        <Main>
+        <>
+        { !loading && <Main>
             <City>
-
-                <SearchCity>
+                
+                {/* <SearchCity>
 
                     <SearchForm onSubmit={ getFormData }>
                         <SearchInput value={ search } onChange={ foo } placeholder='Search a City'/>
-                        <SearchButton /*className='inputForm'*/ type='submit' value='Search' bg_color='#3e4af0'/>
+                        <SearchButton className='inputForm' type='submit' value='Search' bg_color='#3e4af0'/>
                     </SearchForm>
 
                     <StyledH3 fz='Ypx'>Recent searches</StyledH3>
@@ -79,11 +89,12 @@ function Home(){
                         }
                     </RecentSearches>
 
-                </SearchCity>       
+                </SearchCity>        */}
 
                 <SearchButton className='toggleButton' type='button' value='Search for cities'  bg_color='#777'/>
 
-                <WeatherImages bg_img='https://i.imgur.com/tQD1Cvm.png'>
+                <WeatherImages >
+                    <BackImg src='https://i.imgur.com/tQD1Cvm.png'/>
                     <StateImg src={ city.state_img }/>
                 </WeatherImages>
 
@@ -91,7 +102,7 @@ function Home(){
                     <Span fz='30px'>{`${ city.the_temp } °C`}</Span>
                     <StyledH2 fz='1.5rem'>{ city.weather_state_name }</StyledH2>
                     <StyledH3 fz='Ypx'>{`Today - ${ city.applicable_date }`}</StyledH3>
-                    <StyledH3 fz='Ypx'>{`${ <FontAwesomeIcon icon={ faMapMarkerAlt }/> } ${ city.title }, ${ city.parent }`}</StyledH3>
+                    <StyledH3 fz='Ypx'> <FontAwesomeIcon icon={ faMapMarkerAlt }/> {`${ city.title }, ${ city.parent }`}</StyledH3>
                 </Details>
 
             </City>
@@ -100,24 +111,27 @@ function Home(){
                 <Days>
                     { days.map( day => {
                         const img = getImage(day.weather_state_abbr);
-                        return <NextDay 
+                        return <NextDay
+                            key={ day.id } 
                             date={ day.applicable_date } 
-                            min_temp={ day.min_temp }
-                            max_temp={ day.max_temp } 
+                            min_temp={ fixed(day.min_temp) }
+                            max_temp={ fixed(day.max_temp) } 
                             img={ img }
                          />
                     } ) }
                 </Days>
 
                 <StatusContainer>
-                    <Status type={ city.wind_speed } measure={ city.wind_direction_compass }/>
-                    <Status type={ city.humidity } measure='%'/>
-                    <Status type={ city.visibility } measure='miles'/>
-                    <Status type={ city.air_pressure } measure='mb'/>
+                    <Status type='Wind status' num={ city.wind_speed } measure={ city.wind_direction_compass }/>
+                    <Status type='Humidity' num={ city.humidity } measure='%'/>
+                    <Status type='Visibility' num={ city.visibility } measure='miles'/>
+                    <Status type='Air pressure' num={ city.air_pressure } measure='mb'/>
                 </StatusContainer>
 
             </Stats>
         </Main>
+    }
+    </>
     );
 }
 

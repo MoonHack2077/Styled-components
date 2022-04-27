@@ -5,17 +5,22 @@ export const Main = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
+    /* justify-content: center; */
+    min-width: 100vw;
+    min-height: 100vh;
     background-color: ${ backgroundColor };
     color: ${ textColor };
 `;
 
 export const City = styled.aside`
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
-    // height: 50%;
+    /* height: 80%; */
+    padding: 20px;
     background-color: ${ primaryColor };
 `
 export const SearchCity = styled.aside`
@@ -73,21 +78,29 @@ export const Searched = styled.li`
 `
 
 export const WeatherImages = styled.div`
+    position: relative;
     display: grid;
     place-items: center;
     width: 100%;
-    height: 30%;
-    background-image: url(${ ({bg_img}) => bg_img });
-    filter: grayscale(.5);
+    height: 100%;
+    background-size: cover;
+    filter: grayscale(1); 
+`
+export const BackImg = styled.img`
+    position: absolute;
+    height: 100%;
+    filter: opacity(0.1); 
+    transform: scale(2.5);
 `
 export const StateImg = styled.img`
-    width: 100px;
-    height: 100px;
-    filter: grayScale(0); 
+    width: 200px;
+    height: 200px;
 `
 export const Details = styled.div`
     width: 100%;
-    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     text-align: center;
 `
 export const Span = styled.span`
@@ -109,18 +122,30 @@ export const StyledH3 = styled.h3`
 
 export const Stats = styled.section`
     width: 100%;
-    outline: 1px solid red;
-    /* height: 100%; */
-    margin: 100px;
-    background-color: #000
+    display: grid;
+    place-items: center;
+    padding: 0 40px;
+    gap: 20px;
+    min-height: 100%;
+    margin: 0 100px;
 `
 export const Days = styled.section`
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 0 30px;
     width: 100%;
     height: 50%;
 `
 export const StatusContainer = styled.section`
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 20px;
     width: 100%;
     height: 50%;
 `

@@ -13,15 +13,7 @@ const fetchData = async url => {
 
 export const locationSearch = async city => {
     const url = `${API_URL}/search/?query=${city}`;
-    const response = await fetchData(url);
-    return response.then( resolve => locationId( resolve.woeid ) )
-    // return await locationId( response.woeid )
-    // const response = await fetch( url );
-    // const data = await response.json();
-    // const info = `${API_URL}/${data.woeid}/`;
-    // const moreInfo = await fetch( info );
-    // const infoxdd = await moreInfo.json();
-    // return infoxdd;
+    return await fetchData(url);
 }
 
 export const locationId = async id => {
