@@ -12,7 +12,6 @@ export const Container = styled.div`
     margin: 0 10px 10px 0; 
     padding: 10px;
     gap: 10px;
-    outline: 1px solid red;
     background-color: ${ primaryColor };
     color: ${ textColor }
 `

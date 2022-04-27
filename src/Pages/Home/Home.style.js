@@ -4,10 +4,15 @@ import { primaryColor , backgroundColor, textColor } from '../../constants.js';
 export const Main = styled.section`
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     align-items: center;
     /* justify-content: center; */
+    width: 100%;
     min-width: 100vw;
+    height: 100%;
     min-height: 100vh;
+    /* max-width: 1200px;
+    max-height: 1200px; */
     background-color: ${ backgroundColor };
     color: ${ textColor };
 `;
@@ -16,6 +21,8 @@ export const City = styled.aside`
     position: relative;
     display: flex;
     flex-direction: column;
+    /* flex-grow: 1; */
+    gap: 200px;
     align-items: center;
     justify-content: space-between;
     width: 100%;
@@ -142,10 +149,19 @@ export const Days = styled.section`
 export const StatusContainer = styled.section`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     gap: 10px;
     padding: 20px 20px;
     width: 100%;
     height: 50%;
+`
+
+export const Footer = styled.footer`
+    position: absolute;
+    bottom: 20px;
+    outline: 2px solid red;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
 `

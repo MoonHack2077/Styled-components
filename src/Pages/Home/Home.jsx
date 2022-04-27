@@ -1,5 +1,5 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , BackImg , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
+import { Main , City , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
 
@@ -129,6 +129,9 @@ function Home(){
                 </StatusContainer>
 
             </Stats>
+            <Footer>
+                <Span>created by MoonHack2077<StateImg src='../../Assets/devchallenges.png' /></Span>
+            </Footer>
         </Main>
     }
     </>
