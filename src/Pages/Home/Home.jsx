@@ -99,7 +99,7 @@ function Home(){
                 </WeatherImages>
 
                 <Details>
-                    <Span fz='30px'>{`${ city.the_temp } °C`}</Span>
+                    <Span fz='40px'>{`${ city.the_temp } °C`}</Span>
                     <StyledH2 fz='1.5rem'>{ city.weather_state_name }</StyledH2>
                     <StyledH3 fz='Ypx'>{`Today - ${ city.applicable_date }`}</StyledH3>
                     <StyledH3 fz='Ypx'> <FontAwesomeIcon icon={ faMapMarkerAlt }/> {`${ city.title }, ${ city.parent }`}</StyledH3>
@@ -107,7 +107,7 @@ function Home(){
 
             </City>
             <Stats>
-
+                <Span fz='30px'>Next days</Span>
                 <Days>
                     { days.map( day => {
                         const img = getImage(day.weather_state_abbr);
@@ -121,6 +121,7 @@ function Home(){
                     } ) }
                 </Days>
 
+                <Span fz='30px'>Today´s highlights</Span>
                 <StatusContainer>
                     <Status type='Wind status' num={ city.wind_speed } measure={ city.wind_direction_compass }/>
                     <Status type='Humidity' num={ city.humidity } measure='%'/>
@@ -130,7 +131,7 @@ function Home(){
 
             </Stats>
             <Footer>
-                <Span>created by MoonHack2077<StateImg src='../../Assets/devchallenges.png' /></Span>
+                <Span>created by <Span className='username' fz='17px'>MoonHack2077</Span></Span>
             </Footer>
         </Main>
     }

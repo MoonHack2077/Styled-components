@@ -17,6 +17,8 @@ export const Container = styled.div`
 `
 export const Type = styled.h2`
     display: inline-block;
+    font-weight: bolder;
+    font-size: 30px;
     margin: 0;
     color: ${ textColor }
 `
@@ -25,6 +27,6 @@ export const Data = styled.p`
     color: ${ textColor };
 `
 export const DataNumber = styled.span`
-    font-size: 25px;
+    /* font-size: 25px; */
     color: ${ textColor };
 `

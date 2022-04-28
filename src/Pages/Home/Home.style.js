@@ -1,18 +1,14 @@
 import styled from 'styled-components';
 import { primaryColor , backgroundColor, textColor } from '../../constants.js';
 
-export const Main = styled.section`
-    display: flex;
+export const Main = styled.main`
+    /* display: flex; 
     flex-direction: column;
-    flex-grow: 1;
-    align-items: center;
+    align-items: center; */
+    /* min-width: 100vw; */
     /* justify-content: center; */
-    width: 100%;
-    min-width: 100vw;
-    height: 100%;
-    min-height: 100vh;
-    /* max-width: 1200px;
-    max-height: 1200px; */
+    width: auto;
+    margin: auto;
     background-color: ${ backgroundColor };
     color: ${ textColor };
 `;
@@ -21,12 +17,10 @@ export const City = styled.aside`
     position: relative;
     display: flex;
     flex-direction: column;
-    /* flex-grow: 1; */
     gap: 200px;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    /* height: 80%; */
     padding: 20px;
     background-color: ${ primaryColor };
 `
@@ -56,7 +50,7 @@ export const SearchButton = styled.input`
     background-color: ${( { bg_color } ) => bg_color};
 
     &.toggleButton{
-        position: absolute;
+        position: fixed;
         top: 20px;
         left: 20px;
     }
@@ -88,9 +82,8 @@ export const WeatherImages = styled.div`
     position: relative;
     display: grid;
     place-items: center;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
+    /* width: 100%; */
+    /* height: 100%; */
     filter: grayscale(1); 
 `
 export const BackImg = styled.img`
@@ -104,17 +97,21 @@ export const StateImg = styled.img`
     height: 200px;
 `
 export const Details = styled.div`
-    width: 100%;
+    /* width: 100%; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 50px;
     text-align: center;
 `
 export const Span = styled.span`
-    /* color: ${ textColor }; */
     display: inline-block;
     margin: 20px 0;
-    font-size: ${ ({ fz })=> fz }
+    font-size: ${ ({ fz })=> fz };
+
+    &.username{
+        font-weight: bold;
+    }
 `
 export const StyledH2 = styled.h2`
     display: inline-block;
@@ -128,13 +125,14 @@ export const StyledH3 = styled.h3`
 
 
 export const Stats = styled.section`
-    width: 100%;
-    display: grid;
-    place-items: center;
-    padding: 0 40px;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px;
     gap: 20px;
-    min-height: 100%;
-    margin: 0 100px;
+    /* min-height: 100%; */
+    /* margin: 0 100px; */
 `
 export const Days = styled.section`
     display: flex;
@@ -143,7 +141,7 @@ export const Days = styled.section`
     align-items: center;
     gap: 20px;
     padding: 0 30px;
-    width: 100%;
+    /* width: 100%; */
     height: 50%;
 `
 export const StatusContainer = styled.section`
@@ -151,17 +149,12 @@ export const StatusContainer = styled.section`
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 60px;
     padding: 20px 20px;
-    width: 100%;
+    /* width: 100%; */
     height: 50%;
 `
 
 export const Footer = styled.footer`
-    position: absolute;
-    bottom: 20px;
-    outline: 2px solid red;
     text-align: center;
-    width: 100%;
-    padding: 10px;
 `
