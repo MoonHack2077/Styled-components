@@ -129,10 +129,10 @@ function Home(){
                     <Status type='Air pressure' num={ city.air_pressure } measure='mb'/>
                 </StatusContainer>
 
+                <Footer>
+                    <Span>created by <Span className='username' fz='17px'>MoonHack2077</Span></Span>
+                </Footer>
             </Stats>
-            <Footer>
-                <Span>created by <Span className='username' fz='17px'>MoonHack2077</Span></Span>
-            </Footer>
         </Main>
     }
     </>

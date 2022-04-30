@@ -7,10 +7,14 @@ export const Main = styled.main`
     align-items: center; */
     /* min-width: 100vw; */
     /* justify-content: center; */
-    width: auto;
-    margin: auto;
+    /* width: 100%; */
     background-color: ${ backgroundColor };
     color: ${ textColor };
+
+    @media screen and (min-width: 800px){
+        display: flex;
+        background-color: red;
+    }
 `;
 
 export const City = styled.aside`
@@ -23,6 +27,13 @@ export const City = styled.aside`
     width: 100%;
     padding: 20px;
     background-color: ${ primaryColor };
+
+    @media screen and (min-width: 700px){
+        height: 100vh;
+        padding: 0;
+        gap: 0;
+        justify-content: space-evenly;
+    }
 `
 export const SearchCity = styled.aside`
     position: absolute;
@@ -85,12 +96,21 @@ export const WeatherImages = styled.div`
     /* width: 100%; */
     /* height: 100%; */
     filter: grayscale(1); 
+
+    @media screen and (min-width: 700px){
+        width: 100%;
+    }
 `
 export const BackImg = styled.img`
     position: absolute;
     height: 100%;
     filter: opacity(0.1); 
     transform: scale(2.5);
+
+    @media screen and (min-width: 700px){
+        width: 100%;
+        transform: scale(1.1);
+    }
 `
 export const StateImg = styled.img`
     width: 200px;
@@ -125,7 +145,7 @@ export const StyledH3 = styled.h3`
 
 
 export const Stats = styled.section`
-    width: 100vw;
+    /* width: 100vw; */
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -143,6 +163,10 @@ export const Days = styled.section`
     padding: 0 30px;
     /* width: 100%; */
     height: 50%;
+
+    @media screen and (min-width: 700px){
+        justify-content: space-beetwen;
+    }
 `
 export const StatusContainer = styled.section`
     display: flex;
@@ -153,6 +177,10 @@ export const StatusContainer = styled.section`
     padding: 20px 20px;
     /* width: 100%; */
     height: 50%;
+
+    @media screen and (min-width: 700px){
+        justify-content: space-beetwen;
+    }
 `
 
 export const Footer = styled.footer`
