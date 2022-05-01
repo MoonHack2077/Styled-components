@@ -1,5 +1,5 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , BackImg , ContainerSpan , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
+import { Main , City , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
 
@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
 function Home(){
-    //latt_long , location_type , title , woeid
+    //Declaring states
     const [ days , setDays ] = useState([]);
     const [ city , setCity ] = useState({});
     const [ search , setSearch ] = useState('');
@@ -21,8 +21,8 @@ function Home(){
     const [ show , setShow ] = useState(false);
     const london = 'san';
 
-    const foo = () => {
-        setSearch( e => e.target.value);
+    const foo = e => {
+        setSearch(e.target.value);
     }
 
     const changeShow = () => {
@@ -45,7 +45,7 @@ function Home(){
         // setRecentSearches(newSearches);
     }
 
-    const fetched = () =>{
+    const fetched = () => {
         setLoading(true);
         locationSearch(london)
         .then(res => {
@@ -85,7 +85,8 @@ function Home(){
                         value='X'
                         bg_color='transparent'
                         right='5px'   
-                        top='20px'
+                        top='10px'
+                        fz='18px'
                         onClick={ changeShow }
                     />
                     <SearchForm onSubmit={ getFormData }>
@@ -147,16 +148,19 @@ function Home(){
                     } ) }
                 </Days>
 
-                <Span className='indicator' fz='30px'>Today´s highlights</Span>
-                <StatusContainer>
-                    <Status type='Wind status' num={ city.wind_speed } measure={ city.wind_direction_compass }/>
-                    <Status type='Humidity' num={ city.humidity } measure='%'/>
-                    <Status type='Visibility' num={ city.visibility } measure='miles'/>
-                    <Status type='Air pressure' num={ city.air_pressure } measure='mb'/>
-                </StatusContainer>
+                <HighLights>
+                    <Span className='indicator' fz='30px'>Today´s highlights</Span>
+                    <StatusContainer>
+                        <Status type='Wind status' num={ city.wind_speed } measure={ city.wind_direction_compass }/>
+                        <Status type='Humidity' num={ city.humidity } measure='%'/>
+                        <Status type='Visibility' num={ city.visibility } measure='miles'/>
+                        <Status type='Air pressure' num={ city.air_pressure } measure='mb'/>
+                    </StatusContainer>
+                </HighLights>
+                
 
                 <Footer>
-                    <Span>created by <Span className='username' fz='17px'>MoonHack2077</Span>- devChallenges.io</Span>
+                    <Span>created by <Span className='username' fz='17px'>MoonHack2077</Span> - devChallenges.io</Span>
                 </Footer>
             </Stats>
         </Main>

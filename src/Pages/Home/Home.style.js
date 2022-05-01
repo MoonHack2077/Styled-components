@@ -12,7 +12,6 @@ export const Main = styled.main`
     color: ${ textColor };
 
     @media screen and (min-width: 1000px){
-        display: flex;
         flex-direction: row;
     }
 `;
@@ -37,22 +36,32 @@ export const City = styled.aside`
     }
 `
 export const SearchCity = styled.aside`
+
+    @keyframes appear{
+        from{ transform: translateX(-2000px) }
+        to{ transform: translateX(0) }
+    }
+
+
     position: fixed;
     top: 0;
     width: 100%;
     height: 100vh;
-    padding-top: 20px;
-    /* padding-left: 40px; */
-    /* background-color: ${ primaryColor }; */
-    background-color: red;
+    background-color: ${ primaryColor };
     z-index: 1000;
+    animation: appear 1s ease-in-out forwards;
+
+    @media screen and (min-width: 1000px){
+        position: absolute;
+    }
 `
 export const SearchForm = styled.form`
     display: flex;
     justify-content: flex-start;
     width: 100%;
     padding: 20px 10px;
-    background-color: #000;
+    margin-top: 30px;
+    /* background-color: #000; */
 `
 export const SearchInput = styled.input`
     width: 300px;
@@ -75,6 +84,7 @@ export const SearchButton = styled.input`
 
     &.toggleButton{
         position: fixed;
+        font-size: ${ ({ fz })=> fz };
         top: ${ ({ top }) => top };
         left: ${ ({ left }) => left };
         right: ${ ({ right }) => right };
@@ -84,9 +94,15 @@ export const SearchButton = styled.input`
     &.inputForm{
         margin-left: 20px;
     }
+
+    @media screen and (min-width: 1000px){
+        &.toggleButton{
+            position: absolute;
+        }
+    }
 `
 export const RecentSearches = styled.ul`
-    width: 100%;
+    /* width: auto; */
     // height: auto; must be this
     height: 300px;
     margin: 0;
@@ -150,6 +166,9 @@ export const Span = styled.span`
     &.username{
         font-weight: bold;
     }
+    &.indicator{
+        text-align: start;
+    }
 `
 export const ContainerSpan = styled.div`
     @media screen and (min-width: 1000px){
@@ -170,14 +189,15 @@ export const StyledH3 = styled.h3`
 
 export const Stats = styled.section`
     display: flex;
-    align-items: center;
+    justify-content: space-between;
     flex-direction: column;
     padding: 40px;
     gap: 20px;
 
     @media screen and (min-width: 1000px){
-        min-height: 100%;
+        max-height: 100vh;
         padding: 0;
+        justify-content: space-between;
         gap: 0;
     }
 `
@@ -191,9 +211,10 @@ export const Days = styled.section`
     height: 50%;
 
     @media screen and (min-width: 1000px){
-        justify-content: space-beetwen;
-        gap: 0;
+        /* justify-content: center; */
+        /* gap: 40px; */
         padding: 0;
+        margin-top: 20px;
     }
 `
 export const StatusContainer = styled.section`
@@ -211,7 +232,12 @@ export const StatusContainer = styled.section`
         padding: 0;
     }
 `
-
+export const HighLights = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`
 export const Footer = styled.footer`
     text-align: center;
 `
