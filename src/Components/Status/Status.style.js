@@ -12,7 +12,6 @@ export const Container = styled.div`
     padding: 20px 30px;
     /* outline: 1px solid blue; */
     /* text-align: center; */
-    border-radius: 30px;
     background-color: ${ primaryColor };
 
     @media screen and (min-width: 700px){

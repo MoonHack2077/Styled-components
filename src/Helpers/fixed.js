@@ -1,6 +1,6 @@
 /**
  * Function to do fixed to the num
  * @param num 
- * @return the num with two decimals, rounded if was necessary
+ * @return the num with zero decimals, rounded if was necessary
  */
-export const fixed = num => num.toFixed(2);
+export const fixed = num => num.toFixed(0);

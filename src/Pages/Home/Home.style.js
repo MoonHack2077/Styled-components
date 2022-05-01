@@ -37,16 +37,21 @@ export const City = styled.aside`
     }
 `
 export const SearchCity = styled.aside`
-    position: absolute;
+    position: fixed;
+    top: 0;
     width: 100%;
-    // height: 50%;
-    padding: 20px;
-    background-color: ${ primaryColor };
+    height: 100vh;
+    padding-top: 20px;
+    /* padding-left: 40px; */
+    /* background-color: ${ primaryColor }; */
+    background-color: red;
+    z-index: 1000;
 `
 export const SearchForm = styled.form`
     display: flex;
+    justify-content: flex-start;
     width: 100%;
-    // padding: 8px;
+    padding: 20px 10px;
     background-color: #000;
 `
 export const SearchInput = styled.input`
@@ -55,25 +60,37 @@ export const SearchInput = styled.input`
     outline: 1px solid ${ textColor };
     color: ${ textColor };
     background-color: transparent;
+
+    &::placeholder{
+        color: ${ textColor };
+    }
 `
 export const SearchButton = styled.input`
+    border: none;
+    outline: none;
+    z-index: 200;
     padding: 8px;
     color: ${ textColor };
     background-color: ${( { bg_color } ) => bg_color};
 
     &.toggleButton{
         position: fixed;
-        top: 20px;
-        left: 20px;
+        top: ${ ({ top }) => top };
+        left: ${ ({ left }) => left };
+        right: ${ ({ right }) => right };
+        bottom: ${ ({ bottom }) => bottom };
     }
 
-    // &.inputForm{
-
-    // }
+    &.inputForm{
+        margin-left: 20px;
+    }
 `
 export const RecentSearches = styled.ul`
     width: 100%;
+    // height: auto; must be this
+    height: 300px;
     margin: 0;
+    background-color: blue;
 `
 export const Searched = styled.li`
     width: 100%;

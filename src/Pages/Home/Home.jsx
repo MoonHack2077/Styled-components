@@ -18,14 +18,20 @@ function Home(){
     const [ search , setSearch ] = useState('');
     const [ recentSearches , setRecentSearches ] = useState([]);
     const [ loading , setLoading ] = useState(false);
+    const [ show , setShow ] = useState(false);
     const london = 'san';
 
-    const foo = e => {
-        setSearch(e.target.value);
+    const foo = () => {
+        setSearch( e => e.target.value);
     }
-    const getFormData = e => {
-        e.preventDefaul();
 
+    const changeShow = () => {
+        setShow(!show);
+    }
+
+    const getFormData = e => {
+        e.preventDefault();
+        console.log(e.target);
         if( !search )  return;
 
         //Getting the form data
@@ -43,7 +49,6 @@ function Home(){
         setLoading(true);
         locationSearch(london)
         .then(res => {
-            console.log(res[0]);
             locationId(res[0].woeid)
             .then(resolve => {
                 const nextDays = [ ...resolve.consolidated_weather ];
@@ -72,16 +77,30 @@ function Home(){
         { !loading && <Main>
             <City>
                 
-                {/* <SearchCity>
+                { show && <SearchCity>
 
+                    <SearchButton 
+                        className='toggleButton' 
+                        type='button' 
+                        value='X'
+                        bg_color='transparent'
+                        right='5px'   
+                        top='20px'
+                        onClick={ changeShow }
+                    />
                     <SearchForm onSubmit={ getFormData }>
                         <SearchInput value={ search } onChange={ foo } placeholder='Search a City'/>
-                        <SearchButton className='inputForm' type='submit' value='Search' bg_color='#3e4af0'/>
+                        <SearchButton 
+                        className='inputForm' 
+                        type='submit' 
+                        value='Search' 
+                        bg_color='#3e4af0'                  
+                        />
                     </SearchForm>
 
-                    <StyledH3 fz='Ypx'>Recent searches</StyledH3>
 
                     <RecentSearches>
+                        <StyledH3 fz='Ypx'>Recent searches</StyledH3>
                         {
                             recentSearches.map( search =>{
                                 return <Searched> { `${search.title } ${<Span fz='30px' className='arrow'> &gt; </Span>}` } </Searched>
@@ -89,9 +108,17 @@ function Home(){
                         }
                     </RecentSearches>
 
-                </SearchCity>        */}
+                </SearchCity>    }   
 
-                <SearchButton className='toggleButton' type='button' value='Search for cities'  bg_color='#777'/>
+                <SearchButton 
+                    className='toggleButton' 
+                    type='button' 
+                    value='Search for cities'  
+                    bg_color='#888'
+                    left='20px'   
+                    top='20px'
+                    onClick={ changeShow }
+                />
 
                 <WeatherImages >
                     <BackImg src='https://i.imgur.com/tQD1Cvm.png'/>
@@ -107,9 +134,6 @@ function Home(){
 
             </City>
             <Stats>
-                <ContainerSpan>
-                    <Span className='indicator' fz='30px'>Next days</Span>
-                </ContainerSpan>
                 <Days>
                     { days.map( day => {
                         const img = getImage(day.weather_state_abbr);
@@ -132,7 +156,7 @@ function Home(){
                 </StatusContainer>
 
                 <Footer>
-                    <Span>created by <Span className='username' fz='17px'>MoonHack2077</Span></Span>
+                    <Span>created by <Span className='username' fz='17px'>MoonHack2077</Span>- devChallenges.io</Span>
                 </Footer>
             </Stats>
         </Main>
