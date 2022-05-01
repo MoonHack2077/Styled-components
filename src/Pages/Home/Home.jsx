@@ -1,5 +1,5 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
+import { Main , City , BackImg , ContainerSpan , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
 
@@ -107,7 +107,9 @@ function Home(){
 
             </City>
             <Stats>
-                <Span fz='30px'>Next days</Span>
+                <ContainerSpan>
+                    <Span className='indicator' fz='30px'>Next days</Span>
+                </ContainerSpan>
                 <Days>
                     { days.map( day => {
                         const img = getImage(day.weather_state_abbr);
@@ -121,7 +123,7 @@ function Home(){
                     } ) }
                 </Days>
 
-                <Span fz='30px'>Today´s highlights</Span>
+                <Span className='indicator' fz='30px'>Today´s highlights</Span>
                 <StatusContainer>
                     <Status type='Wind status' num={ city.wind_speed } measure={ city.wind_direction_compass }/>
                     <Status type='Humidity' num={ city.humidity } measure='%'/>

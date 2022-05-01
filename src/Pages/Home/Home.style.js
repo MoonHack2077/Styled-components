@@ -2,18 +2,18 @@ import styled from 'styled-components';
 import { primaryColor , backgroundColor, textColor } from '../../constants.js';
 
 export const Main = styled.main`
-    /* display: flex; 
+    display: flex; 
     flex-direction: column;
-    align-items: center; */
+    align-items: center;
     /* min-width: 100vw; */
     /* justify-content: center; */
     /* width: 100%; */
     background-color: ${ backgroundColor };
     color: ${ textColor };
 
-    @media screen and (min-width: 800px){
+    @media screen and (min-width: 1000px){
         display: flex;
-        background-color: red;
+        flex-direction: row;
     }
 `;
 
@@ -28,11 +28,12 @@ export const City = styled.aside`
     padding: 20px;
     background-color: ${ primaryColor };
 
-    @media screen and (min-width: 700px){
+    @media screen and (min-width: 1000px){
         height: 100vh;
         padding: 0;
         gap: 0;
         justify-content: space-evenly;
+        width: 35%;
     }
 `
 export const SearchCity = styled.aside`
@@ -97,7 +98,7 @@ export const WeatherImages = styled.div`
     /* height: 100%; */
     filter: grayscale(1); 
 
-    @media screen and (min-width: 700px){
+    @media screen and (min-width: 1000px){
         width: 100%;
     }
 `
@@ -107,7 +108,7 @@ export const BackImg = styled.img`
     filter: opacity(0.1); 
     transform: scale(2.5);
 
-    @media screen and (min-width: 700px){
+    @media screen and (min-width: 1000px){
         width: 100%;
         transform: scale(1.1);
     }
@@ -133,6 +134,12 @@ export const Span = styled.span`
         font-weight: bold;
     }
 `
+export const ContainerSpan = styled.div`
+    @media screen and (min-width: 1000px){
+        text-align: left;
+    }
+`
+
 export const StyledH2 = styled.h2`
     display: inline-block;
     margin: 0;
@@ -145,14 +152,17 @@ export const StyledH3 = styled.h3`
 
 
 export const Stats = styled.section`
-    /* width: 100vw; */
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 40px;
     gap: 20px;
-    /* min-height: 100%; */
-    /* margin: 0 100px; */
+
+    @media screen and (min-width: 1000px){
+        min-height: 100%;
+        padding: 0;
+        gap: 0;
+    }
 `
 export const Days = styled.section`
     display: flex;
@@ -161,11 +171,12 @@ export const Days = styled.section`
     align-items: center;
     gap: 20px;
     padding: 0 30px;
-    /* width: 100%; */
     height: 50%;
 
-    @media screen and (min-width: 700px){
+    @media screen and (min-width: 1000px){
         justify-content: space-beetwen;
+        gap: 0;
+        padding: 0;
     }
 `
 export const StatusContainer = styled.section`
@@ -174,12 +185,13 @@ export const StatusContainer = styled.section`
     justify-content: center;
     align-items: center;
     gap: 60px;
-    padding: 20px 20px;
-    /* width: 100%; */
+    padding: 20px;
     height: 50%;
 
-    @media screen and (min-width: 700px){
+    @media screen and (min-width: 1000px){
         justify-content: space-beetwen;
+        gap: 0;
+        padding: 0;
     }
 `
 

@@ -13,11 +13,20 @@ export const Container = styled.div`
     padding: 10px;
     gap: 10px;
     background-color: ${ primaryColor };
-    color: ${ textColor }
+    color: ${ textColor };
+
+    @media screen and (min-width: 700px){
+        padding: 5px;
+    }
 `
 export const StateImg = styled.img`
     width: 90px;
     height: 90px;
+
+    @media screen and (min-width: 700px){
+        width: 75px;
+        height: 75px;
+    }
 `
 export const Span = styled.span`
     font-size: 20px;

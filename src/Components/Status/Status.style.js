@@ -14,6 +14,12 @@ export const Container = styled.div`
     /* text-align: center; */
     border-radius: 30px;
     background-color: ${ primaryColor };
+
+    @media screen and (min-width: 700px){
+        min-width: 350px;
+        min-height: 150px;
+        padding: 20px 30px;
+    }
 `
 export const Type = styled.h2`
     display: inline-block;
@@ -25,8 +31,10 @@ export const Type = styled.h2`
 export const Data = styled.p`
     margin: 0;
     color: ${ textColor };
+    text-align: center;
 `
 export const DataNumber = styled.span`
     /* font-size: 25px; */
     color: ${ textColor };
+    margin-right: 5px;
 `
