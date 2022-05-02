@@ -31,23 +31,19 @@ function Home(){
 
     const getFormData = e => {
         e.preventDefault();
-        console.log(e.target);
-        if( !search )  return;
-
-        //Getting the form data
-        const locationSearched = Object.fromEntries(
-            new FormData(e.target)
-        )
-        //First console.log to look out with this, it´s the first time that i use it
-        console.log(locationSearched);
-        // const newSearches = [...recentSearches];
-        // newSearches.push(data);
-        // setRecentSearches(newSearches);
     }
 
-    const fetched = () => {
+    const searchXD = () =>{
+        if( !search ) return 
+        console.log(search);
+        fetched(search);
+        setSearch('');
+    } 
+
+    const fetched = searched => {
         setLoading(true);
-        locationSearch(london)
+
+        locationSearch(searched)
         .then(res => {
             locationId(res[0].woeid)
             .then(resolve => {
@@ -68,9 +64,13 @@ function Home(){
         .catch(console.log)
     }
 
-    useEffect(()=>{
-        fetched();
+    useEffect( () => {
+        fetched(london);
     },[])
+
+    useEffect( () => {
+        setShow(false);
+    },[city])
 
     return(
         <>
@@ -95,7 +95,8 @@ function Home(){
                         className='inputForm' 
                         type='submit' 
                         value='Search' 
-                        bg_color='#3e4af0'                  
+                        bg_color='#3e4af0'
+                        onClick={ searchXD }                  
                         />
                     </SearchForm>
 
