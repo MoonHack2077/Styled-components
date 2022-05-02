@@ -42,10 +42,7 @@ export const SearchCity = styled.aside`
         to{ transform: translateX(0) }
     }
 
-    display: flex;
-    /* justify-content: center; */
-    align-items: center;
-    flex-direction: column;
+    padding: 0 40px;
     position: fixed;
     top: 0;
     width: 100%;
@@ -56,18 +53,20 @@ export const SearchCity = styled.aside`
 
     @media screen and (min-width: 1000px){
         position: absolute;
+        padding: 0 20px;
     }
 `
 export const SearchForm = styled.form`
     display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    padding: 20px 30px;
+    justify-content: center;
+    /* width: 100%; */
+    padding: 20px 0;
     margin-top: 30px;
+    margin-left: 30px;
     /* background-color: #000; */
 `
 export const SearchInput = styled.input`
-    width: 300px;
+    width: 250px;
     padding: 8px;
     outline: 1px solid ${ textColor };
     color: ${ textColor };
@@ -109,7 +108,11 @@ export const SearchButton = styled.input`
     }
 `
 export const RecentSearches = styled.ul`
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     height: auto;
+    width: 80%;
     margin: 0;
 `
 export const Searched = styled.li`
@@ -117,7 +120,7 @@ export const Searched = styled.li`
     justify-content: space-between;
     align-items: center;
     padding: 0 10px;
-    width: 100%;
+    // width: 100%;
     list-style-type: none;
     height: 60px;
     &.arrow{
@@ -222,7 +225,7 @@ export const Days = styled.section`
     @media screen and (min-width: 1000px){
         /* justify-content: center; */
         /* gap: 40px; */
-        padding: 0;
+        padding: 0 20px;
         margin-top: 20px;
     }
 `
@@ -233,12 +236,12 @@ export const StatusContainer = styled.section`
     align-items: center;
     gap: 60px;
     padding: 20px;
-    height: 50%;
+    // height: 50%;
 
     @media screen and (min-width: 1000px){
         justify-content: space-beetwen;
         gap: 0;
-        padding: 0;
+        padding: 0 20px;
     }
 `
 export const HighLights = styled.div`
