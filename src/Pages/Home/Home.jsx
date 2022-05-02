@@ -16,7 +16,7 @@ function Home(){
     const [ days , setDays ] = useState([]);
     const [ city , setCity ] = useState({});
     const [ search , setSearch ] = useState('');
-    const [ recentSearches , setRecentSearches ] = useState([]);
+    const [ recentSearches , setRecentSearches ] = useState( [] );
     const [ loading , setLoading ] = useState(false);
     const [ show , setShow ] = useState(false);
     const london = 'san';
@@ -34,10 +34,12 @@ function Home(){
     }
 
     const searchXD = () =>{
-        if( !search ) return 
-        console.log(search);
+        if( !search ) return;
         fetched(search);
         setSearch('');
+        const recents = [ ...recentSearches ];
+        recents.push(search);
+        setRecentSearches(recents);
     } 
 
     const fetched = searched => {
@@ -72,6 +74,10 @@ function Home(){
         setShow(false);
     },[city])
 
+    useEffect( () => {
+        localStorage.setItem( 'recentSearches', JSON.stringify(recentSearches) );
+    },[recentSearches])
+
     return(
         <>
         { !loading && <Main>
@@ -96,7 +102,8 @@ function Home(){
                         type='submit' 
                         value='Search' 
                         bg_color='#3e4af0'
-                        onClick={ searchXD }                  
+                        onClick={ searchXD }
+                        bg_color_h='#2d39e0'                  
                         />
                     </SearchForm>
 
@@ -104,8 +111,8 @@ function Home(){
                     <RecentSearches>
                         <StyledH3 fz='Ypx'>Recent searches</StyledH3>
                         {
-                            recentSearches.map( search =>{
-                                return <Searched> { `${search.title } ${<Span fz='30px' className='arrow'> &gt; </Span>}` } </Searched>
+                            recentSearches.map( (search,index) =>{
+                                return <Searched onClick={()=>fetched(search)} key={index}>{search}<Span fz='20px' className='arrow'>{'>'}</Span> </Searched>
                             } )
                         }
                     </RecentSearches>
@@ -117,6 +124,7 @@ function Home(){
                     type='button' 
                     value='Search for cities'  
                     bg_color='#888'
+                    bg_color_h='#666'
                     left='20px'   
                     top='20px'
                     onClick={ changeShow }

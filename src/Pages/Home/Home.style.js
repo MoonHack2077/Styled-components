@@ -42,7 +42,10 @@ export const SearchCity = styled.aside`
         to{ transform: translateX(0) }
     }
 
-
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
     position: fixed;
     top: 0;
     width: 100%;
@@ -59,7 +62,7 @@ export const SearchForm = styled.form`
     display: flex;
     justify-content: flex-start;
     width: 100%;
-    padding: 20px 10px;
+    padding: 20px 30px;
     margin-top: 30px;
     /* background-color: #000; */
 `
@@ -81,6 +84,10 @@ export const SearchButton = styled.input`
     padding: 8px;
     color: ${ textColor };
     background-color: ${( { bg_color } ) => bg_color};
+    
+    &:hover{
+        background-color: ${( { bg_color_h } ) => bg_color_h};;
+    }
 
     &.toggleButton{
         position: fixed;
@@ -102,15 +109,17 @@ export const SearchButton = styled.input`
     }
 `
 export const RecentSearches = styled.ul`
-    /* width: auto; */
-    // height: auto; must be this
-    height: 300px;
+    height: auto;
     margin: 0;
-    background-color: blue;
 `
 export const Searched = styled.li`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
     width: 100%;
-
+    list-style-type: none;
+    height: 60px;
     &.arrow{
         display: none;
     }
