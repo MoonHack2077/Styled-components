@@ -5,7 +5,7 @@ import { Status } from '../../Components/Status/Status.jsx';
 
 import { locationSearch , locationId } from '../../Services/fetches.js';
 import { getImage } from '../../Helpers/getImage.js';
-import { fixed } from '../../Helpers/fixed.js';
+import { round } from '../../Helpers/roundTemp.js';
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -57,7 +57,7 @@ function Home(){
                     title: resolve.title ,  
                     parent: resolve.parent.title , 
                     state_img: img,
-                    the_temp: fixed(today.the_temp) ,
+                    the_temp: round(today.the_temp) ,
                     ...today 
                 });
                 setLoading(false);
@@ -150,8 +150,8 @@ function Home(){
                         return <NextDay
                             key={ day.id } 
                             date={ day.applicable_date } 
-                            min_temp={ fixed(day.min_temp) }
-                            max_temp={ fixed(day.max_temp) } 
+                            min_temp={ round(day.min_temp) }
+                            max_temp={ round(day.max_temp) } 
                             img={ img }
                          />
                     } ) }
