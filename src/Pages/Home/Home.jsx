@@ -33,13 +33,13 @@ function Home(){
         e.preventDefault();
     }
 
-    const searchXD = () =>{
-        if( !search ) return;
+    const searchXD = () => {
+        if( !search || recentSearches.includes(city.title) ) return;
         fetched(search);
-        setSearch('');
+        setSearch('');     
         const recents = [ ...recentSearches ];
-        recents.push(search);
-        setRecentSearches(recents);
+        recents.push(city.title);
+        setRecentSearches(recents);      
     } 
 
     const fetched = searched => {
@@ -59,8 +59,9 @@ function Home(){
                     state_img: img,
                     the_temp: round(today.the_temp) ,
                     ...today 
-                });
+                });   
                 setLoading(false);
+                console.log(city);
             })
         })
         .catch(console.log)
