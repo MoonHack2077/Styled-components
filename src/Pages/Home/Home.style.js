@@ -111,7 +111,7 @@ export const RecentSearches = styled.ul`
     display: flex;
     justify-content: center;
     flex-direction: column;
-    height: auto;
+    /* height: auto; */
     width: 80%;
     margin: 0;
 `

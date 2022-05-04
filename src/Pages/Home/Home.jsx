@@ -34,7 +34,7 @@ function Home(){
     }
 
     const searchXD = () => {
-        if( !search || recentSearches.includes(city.title) ) return;
+        if( !search || recentSearches.includes(search) ) return;
         fetched(search);
         setSearch('');     
         const recents = [ ...recentSearches ];
@@ -46,18 +46,28 @@ function Home(){
         setLoading(true);
 
         locationSearch(searched)
-        .then(res => {
-            locationId(res[0].woeid)
+        .then(response => {
+            locationId(response[0].woeid)
             .then(resolve => {
                 const nextDays = [ ...resolve.consolidated_weather ];
                 const today = resolve.consolidated_weather[0];
                 const img = getImage(today.weather_state_abbr);
+                const windDirection = round(today.wind_direction);
+                const visibility = round(today.visibility);
+                const temp = round(today.the_temp);
+                const humidity = round(today.humidity);
+                const airPressure = round(today.air_pressure);
+
                 setDays(nextDays.slice(1));
                 setCity({ 
-                    title: resolve.title ,  
-                    parent: resolve.parent.title , 
-                    state_img: img,
-                    the_temp: round(today.the_temp) ,
+                    title: resolve.title,  
+                    parent: resolve.parent.title, 
+                    img,
+                    windDirection,
+                    temp,
+                    humidity,
+                    visibility,
+                    airPressure,
                     ...today 
                 });   
                 setLoading(false);
@@ -133,7 +143,7 @@ function Home(){
 
                 <WeatherImages >
                     <BackImg src='https://i.imgur.com/tQD1Cvm.png'/>
-                    <StateImg src={ city.state_img }/>
+                    <StateImg src={ city.img }/>
                 </WeatherImages>
 
                 <Details>
@@ -161,10 +171,10 @@ function Home(){
                 <HighLights>
                     <Span className='indicator' fz='30px'>Today´s highlights</Span>
                     <StatusContainer>
-                        <Status type='Wind status' num={ city.wind_speed } measure={ city.wind_direction_compass }/>
+                        <Status type='Wind direction' num={ city.windDirection } measure={ city.wind_direction_compass }/>
                         <Status type='Humidity' num={ city.humidity } measure='%'/>
                         <Status type='Visibility' num={ city.visibility } measure='miles'/>
-                        <Status type='Air pressure' num={ city.air_pressure } measure='mb'/>
+                        <Status type='Air pressure' num={ city.airPressure } measure='mb'/>
                     </StatusContainer>
                 </HighLights>
                 
