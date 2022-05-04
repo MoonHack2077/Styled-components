@@ -175,9 +175,6 @@ export const Span = styled.span`
     margin: 20px 0;
     font-size: ${ ({ fz })=> fz };
 
-    &.username{
-        font-weight: bold;
-    }
     &.indicator{
         text-align: start;
     }
@@ -195,6 +192,10 @@ export const StyledH2 = styled.h2`
 export const StyledH3 = styled.h3`
     display: inline-block;
     margin: 0;
+
+    &.recents{
+        margin: 20px 0;
+    }
 `
 
 
@@ -252,4 +253,11 @@ export const HighLights = styled.div`
 `
 export const Footer = styled.footer`
     text-align: center;
+`
+
+export const MyGitHub = styled.a`
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    font-size: ${ ({ fz }) => fz };
 `

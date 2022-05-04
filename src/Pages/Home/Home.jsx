@@ -1,5 +1,5 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
+import { Main , City , MyGitHub , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
 
@@ -37,10 +37,14 @@ function Home(){
         if( !search || recentSearches.includes(search) ) return;
         fetched(search);
         setSearch('');     
+    }
+    
+    const setRecents = () => {
+        if( !city.title || recentSearches.includes(city.title) ) return;
         const recents = [ ...recentSearches ];
-        recents.push(city.title);
+        recents.unshift(city.title);
         setRecentSearches(recents);      
-    } 
+    }
 
     const fetched = searched => {
         setLoading(true);
@@ -83,6 +87,7 @@ function Home(){
 
     useEffect( () => {
         setShow(false);
+        setRecents();
     },[city])
 
     useEffect( () => {
@@ -120,7 +125,7 @@ function Home(){
 
 
                     <RecentSearches>
-                        <StyledH3 fz='Ypx'>Recent searches</StyledH3>
+                        <StyledH3 className='recents'>Recent searches</StyledH3>
                         {
                             recentSearches.map( (search,index) =>{
                                 return <Searched onClick={()=>fetched(search)} key={index}>{search}<Span fz='20px' className='arrow'>{'>'}</Span> </Searched>
@@ -180,7 +185,7 @@ function Home(){
                 
 
                 <Footer>
-                    <Span>created by <Span className='username' fz='17px'>MoonHack2077</Span> - devChallenges.io</Span>
+                    <Span>created by <MyGitHub href='https://github.com/MoonHack2077' target='_blank' fz='17px'>MoonHack2077</MyGitHub> - devChallenges.io</Span>
                 </Footer>
             </Stats>
         </Main>
