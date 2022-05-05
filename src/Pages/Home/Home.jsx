@@ -11,29 +11,37 @@ import { round } from '../../Helpers/roundTemp.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
+const KEY = 'recentSearches';
+
 function Home(){
+    const searches = localStorage.getItem( KEY ) ? localStorage.getItem( KEY ) : [];
+
     //Declaring states
     const [ days , setDays ] = useState([]);
     const [ city , setCity ] = useState({});
     const [ search , setSearch ] = useState('');
-    const [ recentSearches , setRecentSearches ] = useState( [] );
+    const [ recentSearches , setRecentSearches ] = useState( searches );
     const [ loading , setLoading ] = useState(false);
-    const [ show , setShow ] = useState(false);
-    const london = 'san';
+    const [ showSearch , setShowSearch ] = useState(false);
+    const [ counter , setCounter ] = useState(0);
 
-    const foo = e => {
+    //This is the city that will appear by default
+    //Even thoug this will become to the user´s current location 
+    const cityByDefault = 'san';
+
+    const changeSearch = e => {
         setSearch(e.target.value);
     }
 
-    const changeShow = () => {
-        setShow(!show);
+    const changeShowSearch = () => {
+        setShowSearch(!showSearch);
     }
 
-    const getFormData = e => {
+    const preventReload = e => {
         e.preventDefault();
     }
 
-    const searchXD = () => {
+    const searchCity = () => {
         if( !search ) return;
         const recents = [ ...recentSearches ] ;
         const recentsLower = recents.map( cities => cities.toLowerCase() );
@@ -41,11 +49,12 @@ function Home(){
         if( recentsLower.some( cities =>  (cities === searchLower) || 
         (cities.includes(searchLower)) ) ) return;
 
-        fetched(search);
+        fetchCity(search);
         setSearch('');     
     }
     
     const setRecents = () => {
+        if( counter < 2 ) return;
         if( !city.title || recentSearches.includes(city.title) ) return;
         const recents = [ ...recentSearches ];
 
@@ -55,7 +64,7 @@ function Home(){
         setRecentSearches(recents);      
     }
 
-    const fetched = searched => {
+    const fetchCity = searched => {
         setLoading(true);
 
         locationSearch(searched)
@@ -82,24 +91,26 @@ function Home(){
                     visibility,
                     airPressure,
                     ...today 
-                });   
+                });
+                setCounter( currCounter => currCounter + 1 )
                 setLoading(false);
             })
         })
         .catch(console.log)
     }
 
+    //UseEffects
     useEffect( () => {
-        fetched(london);
+        fetchCity(cityByDefault);
     },[])
 
     useEffect( () => {
-        setShow(false);
+        setShowSearch(false);
         setRecents();
     },[city])
 
     useEffect( () => {
-        localStorage.setItem( 'recentSearches', JSON.stringify(recentSearches) );
+        localStorage.setItem( KEY, JSON.stringify(recentSearches) );
     },[recentSearches])
 
     return(
@@ -107,7 +118,7 @@ function Home(){
         { !loading && <Main>
             <City>
                 
-                { show && <SearchCity>
+                { showSearch && <SearchCity>
 
                     <SearchButton 
                         className='toggleButton' 
@@ -117,16 +128,16 @@ function Home(){
                         right='5px'   
                         top='10px'
                         fz='18px'
-                        onClick={ changeShow }
+                        onClick={ changeShowSearch }
                     />
-                    <SearchForm onSubmit={ getFormData }>
-                        <SearchInput value={ search } onChange={ foo } placeholder='Search a City'/>
+                    <SearchForm onSubmit={ preventReload }>
+                        <SearchInput value={ search } onChange={ changeSearch } placeholder='Search a City'/>
                         <SearchButton 
                         className='inputForm' 
                         type='submit' 
                         value='Search' 
                         bg_color='#3e4af0'
-                        onClick={ searchXD }
+                        onClick={ searchCity }
                         bg_color_h='#2d39e0'                  
                         />
                     </SearchForm>
@@ -136,7 +147,7 @@ function Home(){
                         <StyledH3 className='recents'>Recent searches</StyledH3>
                         {
                             recentSearches.map( (search,index) =>{
-                                return <Searched onClick={()=>fetched(search)} key={index}>{search}<Span fz='20px' className='arrow'>{'>'}</Span> </Searched>
+                                return <Searched onClick={()=>fetchCity(search)} key={index}>{search}<Span fz='20px' className='arrow'>{'>'}</Span> </Searched>
                             } )
                         }
                     </RecentSearches>
@@ -151,7 +162,7 @@ function Home(){
                     bg_color_h='#666'
                     left='20px'   
                     top='20px'
-                    onClick={ changeShow }
+                    onClick={ changeShowSearch }
                 />
 
                 <WeatherImages >
