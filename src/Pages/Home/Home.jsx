@@ -11,16 +11,17 @@ import { round } from '../../Helpers/roundTemp.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
-const KEY = 'recentSearches';
+const KEY = 'RECENTSEARCHES';
 
 function Home(){
-    const searches = localStorage.getItem( KEY ) ? localStorage.getItem( KEY ) : [];
+    //Variable to kwon if there are searches at the localStorage
+    const searches = localStorage.getItem( KEY ) ? JSON.parse( localStorage.getItem( KEY ) ) : [];
 
     //Declaring states
     const [ days , setDays ] = useState([]);
     const [ city , setCity ] = useState({});
     const [ search , setSearch ] = useState('');
-    const [ recentSearches , setRecentSearches ] = useState( searches );
+    const [ recentSearches , setRecentSearches ] = useState(searches);
     const [ loading , setLoading ] = useState(false);
     const [ showSearch , setShowSearch ] = useState(false);
     const [ counter , setCounter ] = useState(0);
@@ -69,10 +70,10 @@ function Home(){
 
         locationSearch(searched)
         .then(response => {
-            locationId(response[0].woeid)
+            locationId(response[0]?.woeid)
             .then(resolve => {
-                const nextDays = [ ...resolve.consolidated_weather ];
-                const today = resolve.consolidated_weather[0];
+                const nextDays = [ ...resolve?.consolidated_weather ];
+                const today = resolve?.consolidated_weather[0];
                 const img = getImage(today.weather_state_abbr);
                 const windDirection = round(today.wind_direction);
                 const visibility = round(today.visibility);
@@ -82,8 +83,8 @@ function Home(){
 
                 setDays(nextDays.slice(1));
                 setCity({ 
-                    title: resolve.title,  
-                    parent: resolve.parent.title, 
+                    title: resolve?.title,  
+                    parent: resolve?.parent, 
                     img,
                     windDirection,
                     temp,
@@ -174,7 +175,7 @@ function Home(){
                     <Span fz='40px'>{`${ city.the_temp } °C`}</Span>
                     <StyledH2 fz='1.5rem'>{ city.weather_state_name }</StyledH2>
                     <StyledH3 fz='Ypx'>{`Today - ${ city.applicable_date }`}</StyledH3>
-                    <StyledH3 fz='Ypx'> <FontAwesomeIcon icon={ faMapMarkerAlt }/> {`${ city.title }, ${ city.parent }`}</StyledH3>
+                    <StyledH3 fz='Ypx'> <FontAwesomeIcon icon={ faMapMarkerAlt }/> {`${ city.title }, ${ city.parent?.title }`}</StyledH3>
                 </Details>
 
             </City>
