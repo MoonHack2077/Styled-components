@@ -4,12 +4,8 @@ import { primaryColor , textColor } from '../../constants.js';
 export const Container = styled.div`
     display: grid;
     place-items: center;
-    // flex-direction: column;
-    // justify-content: center;
-    // align-items: center;
-    // width: 200px;
-    // height: 350px;
-    margin: 0 10px 10px 0; 
+    /* transform: scale(.8); */
+    /* margin: 0 10px 10px 0;  */
     padding: 10px;
     gap: 10px;
     background-color: ${ primaryColor };
@@ -17,6 +13,7 @@ export const Container = styled.div`
 
     @media screen and (min-width: 700px){
         padding: 5px;
+        transform: scale(.9);
     }
 `
 export const StateImg = styled.img`

@@ -1,5 +1,5 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , MyGitHub , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
+import { Main , City , MyGitHub , RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
 
@@ -34,7 +34,13 @@ function Home(){
     }
 
     const searchXD = () => {
-        if( !search || recentSearches.includes(search) ) return;
+        if( !search ) return;
+        const recents = [ ...recentSearches ] ;
+        const recentsLower = recents.map( cities => cities.toLowerCase() );
+        const searchLower = search.toLowerCase();
+        if( recentsLower.some( cities =>  (cities === searchLower) || 
+        (cities.includes(searchLower)) ) ) return;
+
         fetched(search);
         setSearch('');     
     }
@@ -42,6 +48,9 @@ function Home(){
     const setRecents = () => {
         if( !city.title || recentSearches.includes(city.title) ) return;
         const recents = [ ...recentSearches ];
+
+        if( recents.length === 7 ) recents.splice(-1);
+
         recents.unshift(city.title);
         setRecentSearches(recents);      
     }
@@ -75,7 +84,6 @@ function Home(){
                     ...today 
                 });   
                 setLoading(false);
-                console.log(city);
             })
         })
         .catch(console.log)
@@ -159,35 +167,37 @@ function Home(){
                 </Details>
 
             </City>
-            <Stats>
-                <Days>
-                    { days.map( day => {
-                        const img = getImage(day.weather_state_abbr);
-                        return <NextDay
-                            key={ day.id } 
-                            date={ day.applicable_date } 
-                            min_temp={ round(day.min_temp) }
-                            max_temp={ round(day.max_temp) } 
-                            img={ img }
-                         />
-                    } ) }
-                </Days>
+            <RightSide>
+                <Stats>
+                    <Days>
+                        { days.map( day => {
+                            const img = getImage(day.weather_state_abbr);
+                            return <NextDay
+                                key={ day.id } 
+                                date={ day.applicable_date } 
+                                min_temp={ round(day.min_temp) }
+                                max_temp={ round(day.max_temp) } 
+                                img={ img }
+                            />
+                        } ) }
+                    </Days>
 
-                <HighLights>
-                    <Span className='indicator' fz='30px'>Today´s highlights</Span>
-                    <StatusContainer>
-                        <Status type='Wind direction' num={ city.windDirection } measure={ city.wind_direction_compass }/>
-                        <Status type='Humidity' num={ city.humidity } measure='%'/>
-                        <Status type='Visibility' num={ city.visibility } measure='miles'/>
-                        <Status type='Air pressure' num={ city.airPressure } measure='mb'/>
-                    </StatusContainer>
-                </HighLights>
-                
+                    <HighLights>
+                        <Span className='indicator' fz='30px'>Today´s highlights</Span>
+                        <StatusContainer>
+                            <Status type='Wind direction' num={ city.windDirection } measure={ city.wind_direction_compass }/>
+                            <Status type='Humidity' num={ city.humidity } measure='%'/>
+                            <Status type='Visibility' num={ city.visibility } measure='miles'/>
+                            <Status type='Air pressure' num={ city.airPressure } measure='mb'/>
+                        </StatusContainer>
+                    </HighLights>
+                            
+                </Stats>
 
                 <Footer>
                     <Span>created by <MyGitHub href='https://github.com/MoonHack2077' target='_blank' fz='17px'>MoonHack2077</MyGitHub> - devChallenges.io</Span>
                 </Footer>
-            </Stats>
+            </RightSide>
         </Main>
     }
     </>

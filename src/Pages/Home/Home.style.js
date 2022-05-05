@@ -5,8 +5,8 @@ export const Main = styled.main`
     display: flex; 
     flex-direction: column;
     align-items: center;
-    /* min-width: 100vw; */
-    /* justify-content: center; */
+    width: 100vw;
+    justify-content: center;
     /* width: 100%; */
     background-color: ${ backgroundColor };
     color: ${ textColor };
@@ -198,33 +198,38 @@ export const StyledH3 = styled.h3`
     }
 `
 
-
+export const RightSide = styled.section`
+    margin: 0;
+`
 
 export const Stats = styled.section`
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column;
+    margin: auto;
+    height: 100%;
     padding: 40px;
     gap: 20px;
 
     @media screen and (min-width: 1000px){
-        max-height: 100vh;
+        min-height: 100%;
         padding: 0;
-        justify-content: space-between;
         gap: 0;
     }
 `
 export const Days = styled.section`
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
+    margin: auto;
     padding: 0 30px;
-    height: 50%;
+    /* height: 50%; */
+    width: auto;
 
     @media screen and (min-width: 1000px){
-        /* justify-content: center; */
+        justify-content: space-between;
         /* gap: 40px; */
         padding: 0 20px;
         margin-top: 20px;
@@ -233,14 +238,16 @@ export const Days = styled.section`
 export const StatusContainer = styled.section`
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     gap: 60px;
     padding: 20px;
-    // height: 50%;
+    width: auto;
+    /* margin: auto; */
+    height: auto;
 
     @media screen and (min-width: 1000px){
-        justify-content: space-beetwen;
+        /* justify-content: space-between; */
         gap: 0;
         padding: 0 20px;
     }
@@ -250,14 +257,20 @@ export const HighLights = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 90%;
+    margin: auto;
+    height: auto;
 `
 export const Footer = styled.footer`
+    position: relative;
+    bottom: 0;
+    width: 100%;
     text-align: center;
 `
 
 export const MyGitHub = styled.a`
     font-weight: bold;
     text-decoration: none;
-    color: #fff;
+    color: ${ textColor };
     font-size: ${ ({ fz }) => fz };
 `
