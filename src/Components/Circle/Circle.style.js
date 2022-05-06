@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { backgroundColor , textColor , gray } from '../../constants';
 
-export const Container = styled.circle`
+export const Container = styled.div`
     display: flex;
     text-align: center;
     background-color: ${ gray };

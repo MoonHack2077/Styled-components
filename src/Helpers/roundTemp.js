@@ -3,4 +3,4 @@
  * @param temp 
  * @return the temp rounded 
  */
-export const round = temp => Math.round(temp);
+export const roundTemp = temp => Math.round(temp);

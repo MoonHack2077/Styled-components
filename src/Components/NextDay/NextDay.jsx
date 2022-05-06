@@ -7,15 +7,15 @@ function NextDay( { date , min_temp , max_temp , img } ) {
     <Container>
       <Span>{ date }</Span>
       <StateImg src={ img } />
-      <Span><Span className='maxTemp'>{ max_temp }°C</Span>{ min_temp }°C</Span>
+      <Span><Span className='maxTemp'>{ max_temp }</Span>{ min_temp }</Span>
     </Container>
   )
 }
 
 NextDay.propTypes = {
   date: PropTypes.string,
-  min_temp: PropTypes.number,
-  max_temp: PropTypes.number,
+  min_temp: PropTypes.string,
+  max_temp: PropTypes.string,
   img: PropTypes.string
 }
 

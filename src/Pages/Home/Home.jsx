@@ -7,7 +7,8 @@ import { gray , grayHover } from '../../constants.js';
 
 import { locationSearch , locationId } from '../../Services/fetches.js';
 import { getImage } from '../../Helpers/getImage.js';
-import { round } from '../../Helpers/roundTemp.js';
+import { roundTemp } from '../../Helpers/roundTemp.js';
+import { convertToFh } from '../../Helpers/convertToFh.js';
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,6 +28,7 @@ function Home(){
     const [ loading , setLoading ] = useState(false);
     const [ showSearch , setShowSearch ] = useState(false);
     const [ counter , setCounter ] = useState(0);
+    const [ isCelcius , setIsCelcius ] = useState(true);
 
     //This is the city that will appear by default
     //Even thoug this will become to the user´s current location 
@@ -77,11 +79,11 @@ function Home(){
                 const nextDays = [ ...resolve?.consolidated_weather ];
                 const today = resolve?.consolidated_weather[0];
                 const img = getImage(today.weather_state_abbr);
-                const windDirection = round(today.wind_direction);
-                const visibility = round(today.visibility);
-                const temp = round(today.the_temp);
-                const humidity = round(today.humidity);
-                const airPressure = round(today.air_pressure);
+                const windDirection = roundTemp(today.wind_direction);
+                const visibility = roundTemp(today.visibility);
+                const temp = roundTemp(today.the_temp);
+                const humidity = roundTemp(today.humidity);
+                const airPressure = roundTemp(today.air_pressure);
 
                 setDays(nextDays.slice(1));
                 setCity({ 
@@ -174,7 +176,7 @@ function Home(){
                 </WeatherImages>
 
                 <Details>
-                    <Span fz='40px'>{`${ city.the_temp } °C`}</Span>
+                    <Span fz='40px'>{ isCelcius ? `${ city.the_temp } °C` : `${ convertToFh(city.the_temp) } °F`}</Span>
                     <StyledH2 fz='1.5rem'>{ city.weather_state_name }</StyledH2>
                     <StyledH3 fz='Ypx'>{`Today - ${ city.applicable_date }`}</StyledH3>
                     <StyledH3 fz='Ypx'> <FontAwesomeIcon icon={ faMapMarkerAlt }/> {`${ city.title }, ${ city.parent?.title }`}</StyledH3>
@@ -183,8 +185,8 @@ function Home(){
             </City>
             <RightSide>
                 <SwitchTemperature>
-                    <Circle content='°C' />
-                    <Circle content='°F' />
+                    <Circle content='°C' onClick={ () => setIsCelcius(true) } />
+                    <Circle content='°F' onClick={ () => setIsCelcius(false) } />
                 </SwitchTemperature>
                 <Stats>
                     <Days>
@@ -193,8 +195,8 @@ function Home(){
                             return <NextDay
                                 key={ day.id } 
                                 date={ day.applicable_date } 
-                                min_temp={ round(day.min_temp) }
-                                max_temp={ round(day.max_temp) } 
+                                min_temp={ isCelcius ? `${roundTemp(day.min_temp)}°C` : `${convertToFh(day.min_temp)}°F`}
+                                max_temp={ isCelcius ? `${roundTemp(day.max_temp)}°C` : `${convertToFh(day.max_temp)}°F`} 
                                 img={ img }
                             />
                         } ) }
