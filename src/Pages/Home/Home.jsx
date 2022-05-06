@@ -1,7 +1,9 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , MyGitHub , RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
+import { Main , City , MyGitHub , SwitchTemperature ,RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
+import { Circle } from '../../Components/Circle/Circle.jsx';
+import { gray , grayHover } from '../../constants.js';
 
 import { locationSearch , locationId } from '../../Services/fetches.js';
 import { getImage } from '../../Helpers/getImage.js';
@@ -159,8 +161,8 @@ function Home(){
                     className='toggleButton' 
                     type='button' 
                     value='Search for cities'  
-                    bg_color='#888'
-                    bg_color_h='#666'
+                    bg_color={ gray }
+                    bg_color_h={ grayHover }
                     left='20px'   
                     top='20px'
                     onClick={ changeShowSearch }
@@ -180,6 +182,10 @@ function Home(){
 
             </City>
             <RightSide>
+                <SwitchTemperature>
+                    <Circle content='°C' />
+                    <Circle content='°F' />
+                </SwitchTemperature>
                 <Stats>
                     <Days>
                         { days.map( day => {

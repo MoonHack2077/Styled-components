@@ -7,7 +7,6 @@ export const Main = styled.main`
     align-items: center;
     width: 100vw;
     justify-content: center;
-    /* width: 100%; */
     background-color: ${ backgroundColor };
     color: ${ textColor };
 
@@ -59,11 +58,9 @@ export const SearchCity = styled.aside`
 export const SearchForm = styled.form`
     display: flex;
     justify-content: center;
-    /* width: 100%; */
     padding: 20px 0;
     margin-top: 30px;
     margin-left: 30px;
-    /* background-color: #000; */
 `
 export const SearchInput = styled.input`
     width: 250px;
@@ -120,7 +117,6 @@ export const Searched = styled.li`
     justify-content: space-between;
     align-items: center;
     padding: 0 10px;
-    // width: 100%;
     list-style-type: none;
     height: 60px;
     &.arrow{
@@ -128,6 +124,7 @@ export const Searched = styled.li`
     }
 
     &:hover{
+        cursor: pointer;
         outline: 1px solid ${ textColor };  
         &.arrow{
             display: inline;
@@ -139,8 +136,6 @@ export const WeatherImages = styled.div`
     position: relative;
     display: grid;
     place-items: center;
-    /* width: 100%; */
-    /* height: 100%; */
     filter: grayscale(1); 
 
     @media screen and (min-width: 1000px){
@@ -163,7 +158,6 @@ export const StateImg = styled.img`
     height: 200px;
 `
 export const Details = styled.div`
-    /* width: 100%; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -225,12 +219,10 @@ export const Days = styled.section`
     gap: 15px;
     margin: auto;
     padding: 0 30px;
-    /* height: 50%; */
     width: auto;
 
     @media screen and (min-width: 1000px){
         justify-content: space-between;
-        /* gap: 40px; */
         padding: 0 20px;
         margin-top: 20px;
     }
@@ -243,11 +235,9 @@ export const StatusContainer = styled.section`
     gap: 60px;
     padding: 20px;
     width: auto;
-    /* margin: auto; */
     height: auto;
 
     @media screen and (min-width: 1000px){
-        /* justify-content: space-between; */
         gap: 0;
         padding: 0 20px;
     }
@@ -267,10 +257,23 @@ export const Footer = styled.footer`
     width: 100%;
     text-align: center;
 `
-
 export const MyGitHub = styled.a`
     font-weight: bold;
     text-decoration: none;
     color: ${ textColor };
     font-size: ${ ({ fz }) => fz };
+`
+
+export const SwitchTemperature = styled.div`
+    display: none;
+    justify-content: space-between;
+    position: absolute;
+    top: 20px;
+    right: 60px;
+    width: 100px;
+    padding: 10px;
+
+    @media screen and (min-width: 1000px){
+        display: flex;
+    }
 `
