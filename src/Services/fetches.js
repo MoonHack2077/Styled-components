@@ -20,7 +20,7 @@ export const locationId = async id => {
     return await fetchData(url);
 }
 
-export const locationDate = async ( id , date ) => {
-    const url = `${API_URL}/${id}/${date}`;
+export const lattlong = async ( latt , long ) => {
+    const url = `${API_URL}/search/?lattlong=${latt},${long}`;
     return await fetchData(url);
 }

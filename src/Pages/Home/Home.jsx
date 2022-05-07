@@ -5,7 +5,7 @@ import { Status } from '../../Components/Status/Status.jsx';
 import { Circle } from '../../Components/Circle/Circle.jsx';
 import { gray , textColor } from '../../constants.js';
 
-import { locationSearch , locationId } from '../../Services/fetches.js';
+import { locationSearch , locationId , lattlong } from '../../Services/fetches.js';
 import { getImage } from '../../Helpers/getImage.js';
 import { roundValue } from '../../Helpers/roundValue.js';
 import { convertToFh } from '../../Helpers/convertToFh.js';
@@ -76,6 +76,23 @@ function Home(){
         const dayToDisplay = day.toString().split(' ').splice(0,3);
         return `${ dayToDisplay[0] }, ${ dayToDisplay[2] } ${ dayToDisplay[1] }`
     }
+
+    const geo = () => {
+        const { geolocation } = navigator;
+        const coordinates = pos =>{
+            console.log(pos.coords);
+        }
+        const err = e =>{
+            console.log(e)
+        }
+        const options = {
+            enabledHightAccuracy: true,
+            timeout: 0,
+            maximumAge: 0
+        }
+        return geolocation.getCurrentPosition(coordinates,err,options);
+    }
+    console.log(geo());
 
     const fetchCity = searched => {
         setLoading(true);
