@@ -69,6 +69,14 @@ function Home(){
         setRecentSearches(recents);      
     }
 
+    const turnToDay = date => {
+        const day = new Date(date);
+
+        //return the first 3 elements (day , month and date), those are what I need to display
+        const dayToDisplay = day.toString().split(' ').splice(0,3);
+        return `${ dayToDisplay[0] }, ${ dayToDisplay[2] } ${ dayToDisplay[1] }`
+    }
+
     const fetchCity = searched => {
         setLoading(true);
 
@@ -174,9 +182,9 @@ function Home(){
                 </WeatherImages>
 
                 <Details>
-                    <Span fz='40px'>{ isCelcius ? `${ roundValue(city.the_temp) } °C` : `${ convertToFh(city.the_temp) } °F`}</Span>
+                    <Span fz='40px'>{ isCelcius ? `${ roundValue(city.the_temp) }°C` : `${ convertToFh(city.the_temp) }°F`}</Span>
                     <StyledH2 fz='1.5rem'>{ city.weather_state_name }</StyledH2>
-                    <StyledH3 fz='Ypx'>{`Today - ${ city.applicable_date }`}</StyledH3>
+                    <StyledH3 fz='Ypx'>Today  -   { turnToDay(city.applicable_date) }</StyledH3>
                     <StyledH3 fz='Ypx'> <FontAwesomeIcon icon={ faMapMarkerAlt }/> {`${ city.title }, ${ city.parent?.title }`}</StyledH3>
                 </Details>
 
@@ -192,7 +200,7 @@ function Home(){
                             const img = getImage(day.weather_state_abbr);
                             return <NextDay
                                 key={ day.id } 
-                                date={ day.applicable_date } 
+                                date={ day===days[0] ? 'Tomorrow' : turnToDay(day.applicable_date) } 
                                 min_temp={ isCelcius ? `${roundValue(day.min_temp)}°C` : `${convertToFh(day.min_temp)}°F`}
                                 max_temp={ isCelcius ? `${roundValue(day.max_temp)}°C` : `${convertToFh(day.max_temp)}°F`} 
                                 img={ img }

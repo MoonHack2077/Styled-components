@@ -259,7 +259,7 @@ export const Footer = styled.footer`
 `
 export const MyGitHub = styled.a`
     font-weight: bold;
-    text-decoration: none;
+    /* text-decoration: line-through; */
     color: ${ textColor };
     font-size: ${ ({ fz }) => fz };
 `
