@@ -1,11 +1,11 @@
 import styled from 'styled-components'
-import { backgroundColor , textColor , gray } from '../../constants';
+import { backgroundColor , textColor } from '../../constants';
 
 export const Container = styled.div`
     display: flex;
     text-align: center;
-    background-color: ${ gray };
-    color: ${ textColor };
+    background-color: ${ ({ bg_color }) => bg_color };
+    color: ${ ({ bg_color }) => bg_color===textColor ? backgroundColor : textColor };
     border-radius: 50%;
     padding: 10px;
     user-select: none;
@@ -19,5 +19,5 @@ export const Container = styled.div`
 `
 export const Content = styled.span`
     font-size: 20px;
-    color: ${ textColor };
+    /* color: ${ textColor }; */
 `

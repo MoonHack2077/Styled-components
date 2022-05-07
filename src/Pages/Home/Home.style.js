@@ -82,7 +82,7 @@ export const SearchButton = styled.input`
     background-color: ${( { bg_color } ) => bg_color};
     
     &:hover{
-        background-color: ${( { bg_color_h } ) => bg_color_h};;
+        filter: opacity(.8);
     }
 
     &.toggleButton{

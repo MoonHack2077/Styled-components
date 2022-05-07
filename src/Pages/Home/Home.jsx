@@ -3,11 +3,11 @@ import { Main , City , MyGitHub , SwitchTemperature ,RightSide , HighLights , Ba
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
 import { Circle } from '../../Components/Circle/Circle.jsx';
-import { gray , grayHover } from '../../constants.js';
+import { gray , textColor } from '../../constants.js';
 
 import { locationSearch , locationId } from '../../Services/fetches.js';
 import { getImage } from '../../Helpers/getImage.js';
-import { roundTemp } from '../../Helpers/roundTemp.js';
+import { roundValue } from '../../Helpers/roundValue.js';
 import { convertToFh } from '../../Helpers/convertToFh.js';
 
 
@@ -79,11 +79,11 @@ function Home(){
                 const nextDays = [ ...resolve?.consolidated_weather ];
                 const today = resolve?.consolidated_weather[0];
                 const img = getImage(today.weather_state_abbr);
-                const windDirection = roundTemp(today.wind_direction);
-                const visibility = roundTemp(today.visibility);
-                const temp = roundTemp(today.the_temp);
-                const humidity = roundTemp(today.humidity);
-                const airPressure = roundTemp(today.air_pressure);
+                const windDirection = today.wind_direction;
+                const visibility = today.visibility;
+                const temp = today.the_temp;
+                const humidity = today.humidity;
+                const airPressure = today.air_pressure;
 
                 setDays(nextDays.slice(1));
                 setCity({ 
@@ -142,8 +142,7 @@ function Home(){
                         type='submit' 
                         value='Search' 
                         bg_color='#3e4af0'
-                        onClick={ searchCity }
-                        bg_color_h='#2d39e0'                  
+                        onClick={ searchCity }                 
                         />
                     </SearchForm>
 
@@ -164,7 +163,6 @@ function Home(){
                     type='button' 
                     value='Search for cities'  
                     bg_color={ gray }
-                    bg_color_h={ grayHover }
                     left='20px'   
                     top='20px'
                     onClick={ changeShowSearch }
@@ -176,7 +174,7 @@ function Home(){
                 </WeatherImages>
 
                 <Details>
-                    <Span fz='40px'>{ isCelcius ? `${ city.the_temp } °C` : `${ convertToFh(city.the_temp) } °F`}</Span>
+                    <Span fz='40px'>{ isCelcius ? `${ roundValue(city.the_temp) } °C` : `${ convertToFh(city.the_temp) } °F`}</Span>
                     <StyledH2 fz='1.5rem'>{ city.weather_state_name }</StyledH2>
                     <StyledH3 fz='Ypx'>{`Today - ${ city.applicable_date }`}</StyledH3>
                     <StyledH3 fz='Ypx'> <FontAwesomeIcon icon={ faMapMarkerAlt }/> {`${ city.title }, ${ city.parent?.title }`}</StyledH3>
@@ -185,8 +183,8 @@ function Home(){
             </City>
             <RightSide>
                 <SwitchTemperature>
-                    <Circle content='°C' onClick={ () => setIsCelcius(true) } />
-                    <Circle content='°F' onClick={ () => setIsCelcius(false) } />
+                    <Circle content='°C' switchTemp={ () => setIsCelcius(true) }  bg_color={ isCelcius ? textColor : gray } />
+                    <Circle content='°F' switchTemp={ () => setIsCelcius(false) } bg_color={ !isCelcius ? textColor : gray } />
                 </SwitchTemperature>
                 <Stats>
                     <Days>
@@ -195,8 +193,8 @@ function Home(){
                             return <NextDay
                                 key={ day.id } 
                                 date={ day.applicable_date } 
-                                min_temp={ isCelcius ? `${roundTemp(day.min_temp)}°C` : `${convertToFh(day.min_temp)}°F`}
-                                max_temp={ isCelcius ? `${roundTemp(day.max_temp)}°C` : `${convertToFh(day.max_temp)}°F`} 
+                                min_temp={ isCelcius ? `${roundValue(day.min_temp)}°C` : `${convertToFh(day.min_temp)}°F`}
+                                max_temp={ isCelcius ? `${roundValue(day.max_temp)}°C` : `${convertToFh(day.max_temp)}°F`} 
                                 img={ img }
                             />
                         } ) }

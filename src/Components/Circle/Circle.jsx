@@ -1,9 +1,9 @@
 import  React from 'react';
 import { Container , Content } from './Circle.style.js';
 
-function Circle({ content , onClick}){
+function Circle({ content , switchTemp , bg_color}){
     return(
-        <Container onClick={ onClick } >
+        <Container onClick={ switchTemp } bg_color={ bg_color }>
             <Content>{ content }</Content>
         </Container>
     )

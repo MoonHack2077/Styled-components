@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { roundValue } from '../../Helpers/roundValue.js';
 import { Container , Type , Data , DataNumber } from './Status.style.js';
 
 function Status( { type , num , measure } ) {
@@ -7,7 +8,7 @@ function Status( { type , num , measure } ) {
       <Container>
         <Type>{ type }</Type>
         <Data>
-          <DataNumber>{ num }</DataNumber>{ measure }
+          <DataNumber>{ roundValue(num) }</DataNumber>{ measure }
         </Data>
       </Container>
   )
