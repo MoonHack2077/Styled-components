@@ -10,17 +10,17 @@ const fetchData = async url => {
     }
 }
 
-export const locationSearch = async city => {
-    const url = `${API_URL}/search/?query=${city}`;
+export const searchByCityName = async cityName => {
+    const url = `${API_URL}/search/?query=${ cityName }`;
     return await fetchData(url);
 }
 
-export const locationId = async id => {
-    const url = `${API_URL}/${id}/`;
+export const searchByWoeid = async woeid => {
+    const url = `${API_URL}/${ woeid }/`;
     return await fetchData(url);
 }
 
-export const lattlong = async ( latt , long ) => {
-    const url = `${API_URL}/search/?lattlong=${latt},${long}`;
+export const searchByLattLong = async ( latt , long ) => {
+    const url = `${API_URL}/search/?lattlong=${ latt },${ long }`;
     return await fetchData(url);
 }

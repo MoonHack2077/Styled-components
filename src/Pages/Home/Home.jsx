@@ -5,7 +5,7 @@ import { Status } from '../../Components/Status/Status.jsx';
 import { Circle } from '../../Components/Circle/Circle.jsx';
 import { gray , textColor } from '../../constants.js';
 
-import { locationSearch , locationId , lattlong } from '../../Services/fetches.js';
+import { searchByCityName , searchByWoeid , searchByLattLong } from '../../Services/fetches.js';
 import { getImage } from '../../Helpers/getImage.js';
 import { roundValue } from '../../Helpers/roundValue.js';
 import { convertToFh } from '../../Helpers/convertToFh.js';
@@ -29,10 +29,6 @@ function Home(){
     const [ showSearch , setShowSearch ] = useState(false);
     const [ counter , setCounter ] = useState(0);
     const [ isCelcius , setIsCelcius ] = useState(true);
-
-    //This is the city that will appear by default
-    //Even thoug this will become to the user´s current location 
-    const cityByDefault = 'san';
 
     const changeSearch = e => {
         setSearch(e.target.value);
@@ -77,29 +73,13 @@ function Home(){
         return `${ dayToDisplay[0] }, ${ dayToDisplay[2] } ${ dayToDisplay[1] }`
     }
 
-    const geo = () => {
-        const { geolocation } = navigator;
-        const coordinates = pos =>{
-            console.log(pos.coords);
-        }
-        const err = e =>{
-            console.log(e)
-        }
-        const options = {
-            enabledHightAccuracy: true,
-            timeout: 0,
-            maximumAge: 0
-        }
-        return geolocation.getCurrentPosition(coordinates,err,options);
-    }
-    console.log(geo());
 
     const fetchCity = searched => {
         setLoading(true);
 
-        locationSearch(searched)
+        searchByCityName(searched)
         .then(response => {
-            locationId(response[0]?.woeid)
+            searchByWoeid(response[0]?.woeid)
             .then(resolve => {
                 const nextDays = [ ...resolve?.consolidated_weather ];
                 const today = resolve?.consolidated_weather[0];
@@ -129,9 +109,25 @@ function Home(){
         .catch(console.log)
     }
 
+    const currentPosition = () => {
+        const { geolocation } = navigator;
+        const getPosition = position => {
+            const { latitude , longitude } = position.coords;
+            searchByLattLong(latitude , longitude).then( response => {
+                fetchCity(response[0].title);
+            } )
+        }
+        const options = {
+            enabledHightAccuracy: true,
+            timeout: 0,
+            maximumAge: 0
+        }       
+        return geolocation.getCurrentPosition( getPosition , null , options );
+    }
+
     //UseEffects
     useEffect( () => {
-        fetchCity(cityByDefault);
+        currentPosition();
     },[])
 
     useEffect( () => {
@@ -145,7 +141,7 @@ function Home(){
 
     return(
         <>
-        { !loading && <Main>
+        { ( !loading && counter>0 ) && <Main>
             <City>
                 
                 { showSearch && <SearchCity>
