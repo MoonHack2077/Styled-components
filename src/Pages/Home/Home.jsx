@@ -112,22 +112,21 @@ function Home(){
 
     const currentPosition = () => {
         const { geolocation } = navigator;
-        console.log(geolocation);
+
         const getPosition = position => {
-            console.log(position);
             const { latitude , longitude } = position.coords;
             searchByLattLong(latitude , longitude).then( response => {
                 fetchCity(response[0].title);
                 setIsCurrentLocation(true);
             } )
-        }
-        // const err = e => console.log(e);
-        const options = {
-            enableHightAccuracy: true,
-            timeout: 0,
-            maximumAge: 0
-        }       
-        geolocation.getCurrentPosition( getPosition , null , options);
+        };
+        const err = error => {
+            //If the error exists, it will return the same called until it get the position correctly
+            if( error.code ) return geolocation.getCurrentPosition( getPosition , err , options );
+        };
+        const options = { enableHightAccuracy: true , timeout: 0 , maximumAge: 0 };     
+
+        geolocation.getCurrentPosition( getPosition , err , options );
     }
 
     //UseEffects
@@ -137,7 +136,7 @@ function Home(){
 
     useEffect( () => {
         setShowSearch(false);
-        setIsCurrentLocation(false);
+        // setIsCurrentLocation(false);
         setRecents();
     },[city])
 
