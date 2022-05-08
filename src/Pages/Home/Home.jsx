@@ -1,5 +1,5 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , MyGitHub , SwitchTemperature ,RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
+import { Main , City , MyGitHub , SearchContainer , SwitchTemperature ,RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
 import { Circle } from '../../Components/Circle/Circle.jsx';
@@ -12,7 +12,7 @@ import { convertToFh } from '../../Helpers/convertToFh.js';
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt , faCrosshairs } from '@fortawesome/free-solid-svg-icons';
 
 const KEY = 'RECENTSEARCHES';
 
@@ -29,6 +29,7 @@ function Home(){
     const [ showSearch , setShowSearch ] = useState(false);
     const [ counter , setCounter ] = useState(0);
     const [ isCelcius , setIsCelcius ] = useState(true);
+    const [ isCurrentLocation , setIsCurrentLocation ] = useState(false);
 
     const changeSearch = e => {
         setSearch(e.target.value);
@@ -111,18 +112,22 @@ function Home(){
 
     const currentPosition = () => {
         const { geolocation } = navigator;
+        console.log(geolocation);
         const getPosition = position => {
+            console.log(position);
             const { latitude , longitude } = position.coords;
             searchByLattLong(latitude , longitude).then( response => {
                 fetchCity(response[0].title);
+                setIsCurrentLocation(true);
             } )
         }
+        // const err = e => console.log(e);
         const options = {
-            enabledHightAccuracy: true,
+            enableHightAccuracy: true,
             timeout: 0,
             maximumAge: 0
         }       
-        return geolocation.getCurrentPosition( getPosition , null , options );
+        geolocation.getCurrentPosition( getPosition , null , options);
     }
 
     //UseEffects
@@ -132,6 +137,7 @@ function Home(){
 
     useEffect( () => {
         setShowSearch(false);
+        setIsCurrentLocation(false);
         setRecents();
     },[city])
 
@@ -179,15 +185,17 @@ function Home(){
 
                 </SearchCity>    }   
 
-                <SearchButton 
-                    className='toggleButton' 
-                    type='button' 
-                    value='Search for cities'  
-                    bg_color={ gray }
-                    left='20px'   
-                    top='20px'
-                    onClick={ changeShowSearch }
-                />
+                <SearchContainer>
+                    <SearchButton 
+                        className='toggleButton' 
+                        type='button' 
+                        value='Search for cities'  
+                        bg_color={ gray }
+                        onClick={ changeShowSearch }
+                    />
+                    <Circle content={<FontAwesomeIcon icon={ faCrosshairs }/>} onClick={ currentPosition } bg_color={ isCurrentLocation ? textColor : gray } />
+                </SearchContainer>
+                
 
                 <WeatherImages >
                     <BackImg src='https://i.imgur.com/tQD1Cvm.png'/>
@@ -198,14 +206,14 @@ function Home(){
                     <Span fz='40px'>{ isCelcius ? `${ roundValue(city.the_temp) }°C` : `${ convertToFh(city.the_temp) }°F`}</Span>
                     <StyledH2 fz='1.5rem'>{ city.weather_state_name }</StyledH2>
                     <StyledH3 fz='Ypx'>Today  -   { turnToDay(city.applicable_date) }</StyledH3>
-                    <StyledH3 fz='Ypx'> <FontAwesomeIcon icon={ faMapMarkerAlt }/> {`${ city.title }, ${ city.parent?.title }`}</StyledH3>
+                    <StyledH3 fz='Ypx'>  {`${ city.title }, ${ city.parent?.title }`}</StyledH3>
                 </Details>
 
             </City>
             <RightSide>
                 <SwitchTemperature>
-                    <Circle content='°C' switchTemp={ () => setIsCelcius(true) }  bg_color={ isCelcius ? textColor : gray } />
-                    <Circle content='°F' switchTemp={ () => setIsCelcius(false) } bg_color={ !isCelcius ? textColor : gray } />
+                    <Circle content='°C' onClick={ () => setIsCelcius(true) }  bg_color={ isCelcius ? textColor : gray } />
+                    <Circle content='°F' onClick={ () => setIsCelcius(false) } bg_color={ !isCelcius ? textColor : gray } />
                 </SwitchTemperature>
                 <Stats>
                     <Days>

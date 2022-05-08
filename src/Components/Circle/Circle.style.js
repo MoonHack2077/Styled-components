@@ -9,6 +9,7 @@ export const Container = styled.div`
     border-radius: 50%;
     padding: 10px;
     user-select: none;
+    margin-right: 20px;
 
     &:hover{
         background-color: ${ textColor };

@@ -86,23 +86,24 @@ export const SearchButton = styled.input`
     }
 
     &.toggleButton{
-        position: fixed;
+        /* position: fixed; */
         font-size: ${ ({ fz })=> fz };
         top: ${ ({ top }) => top };
         left: ${ ({ left }) => left };
         right: ${ ({ right }) => right };
         bottom: ${ ({ bottom }) => bottom };
+        margin-left: 20px;
     }
 
     &.inputForm{
         margin-left: 20px;
     }
 
-    @media screen and (min-width: 1000px){
+    /* @media screen and (min-width: 1000px){
         &.toggleButton{
             position: absolute;
         }
-    }
+    } */
 `
 export const RecentSearches = styled.ul`
     display: flex;
@@ -276,4 +277,14 @@ export const SwitchTemperature = styled.div`
     @media screen and (min-width: 1000px){
         display: flex;
     }
+`
+
+export const SearchContainer = styled.div`
+    display: flex;
+    align-items : center;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    padding: 10px 20px;
 `
