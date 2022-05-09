@@ -3,6 +3,7 @@ import { Main , City , MyGitHub , SearchContainer , SwitchTemperature ,RightSide
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
 import { Circle } from '../../Components/Circle/Circle.jsx';
+import { Loading } from '../../Components/Modal/Loading.jsx';
 import { gray , textColor } from '../../constants.js';
 
 import { searchByCityName , searchByWoeid , searchByLattLong } from '../../Services/fetches.js';
@@ -151,17 +152,17 @@ function Home(){
 
     return(
         <>
-        { ( !loading && counter>0 ) && <Main>
+        { ( !loading && counter>0 ) ? <Main>
             <City>
                 
-                { showSearch && <SearchCity>
+                { showSearch && <SearchCity className={ !showSearch ? 'hidden' : 'showing' } >
 
                     <SearchButton 
                         className='toggleButton' 
                         type='button' 
                         value='X'
                         bg_color='transparent'
-                        right='5px'   
+                        right='150px'   
                         top='10px'
                         fz='18px'
                         onClick={ changeShowSearch }
@@ -252,6 +253,7 @@ function Home(){
                 </Footer>
             </RightSide>
         </Main>
+        : <Loading/>
     }
     </>
     );

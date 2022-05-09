@@ -37,8 +37,13 @@ export const City = styled.aside`
 export const SearchCity = styled.aside`
 
     @keyframes appear{
-        from{ transform: translateX(-2000px) }
+        from{ transform: translateX(-100%) }
         to{ transform: translateX(0) }
+    }
+
+    @keyframes disappear{
+        from{ transform: translateX(0) }
+        to{ transform: translateX(100%) }
     }
 
     padding: 0 40px;
@@ -47,12 +52,19 @@ export const SearchCity = styled.aside`
     width: 100%;
     height: 100vh;
     background-color: ${ primaryColor };
-    z-index: 1000;
-    animation: appear 1s ease-in-out forwards;
+    z-index: 1000;  
+        
+    &.showing{
+        animation: appear 1s ease-in-out forwards;
+    }
+
+    &.hidden{
+        animation: disappear 3s ease-in-out forwards;
+    }
 
     @media screen and (min-width: 1000px){
         position: absolute;
-        padding: 0 20px;
+        padding: 0;
     }
 `
 export const SearchForm = styled.form`
@@ -86,12 +98,9 @@ export const SearchButton = styled.input`
     }
 
     &.toggleButton{
-        /* position: fixed; */
         font-size: ${ ({ fz })=> fz };
         top: ${ ({ top }) => top };
-        left: ${ ({ left }) => left };
         right: ${ ({ right }) => right };
-        bottom: ${ ({ bottom }) => bottom };
         margin-left: 20px;
     }
 
