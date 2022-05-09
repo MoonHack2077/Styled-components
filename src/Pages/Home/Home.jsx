@@ -121,6 +121,10 @@ function Home(){
             } )
         };
         const err = error => {
+            console.log( error );
+            //If the user doesn´t allow his location, the app will display san francisco´ stats
+            if( error.code === 1 ) return fetchCity('san');
+
             //If the error exists, it will return the same called until it get the position correctly
             if( error.code ) return geolocation.getCurrentPosition( getPosition , err , options );
         };
