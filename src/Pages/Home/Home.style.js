@@ -173,6 +173,10 @@ export const Span = styled.span`
     &.indicator{
         text-align: start;
     }
+
+    &.recents{
+        margin: 20px 0;
+    }
 `
 export const ContainerSpan = styled.div`
     @media screen and (min-width: 1000px){
@@ -180,17 +184,9 @@ export const ContainerSpan = styled.div`
     }
 `
 
-export const StyledH2 = styled.h2`
-    display: inline-block;
-    margin: 0;
-`
 export const StyledH3 = styled.h3`
     display: inline-block;
     margin: 0;
-
-    &.recents{
-        margin: 20px 0;
-    }
 `
 
 export const RightSide = styled.section`

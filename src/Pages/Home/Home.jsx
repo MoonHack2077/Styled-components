@@ -1,5 +1,5 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , MyGitHub , SearchContainer , SwitchTemperature ,RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
+import { Main , City , MyGitHub , SearchContainer , SwitchTemperature ,RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
 import { Circle } from '../../Components/Circle/Circle.jsx';
@@ -29,7 +29,6 @@ function Home(){
     const [ showSearch , setShowSearch ] = useState(false);
     const [ counter , setCounter ] = useState(0);
     const [ isCelcius , setIsCelcius ] = useState(true);
-    const [ isCurrentLocation , setIsCurrentLocation ] = useState(false);
 
     const changeSearch = e => {
         setSearch(e.target.value);
@@ -82,6 +81,9 @@ function Home(){
         .then(response => {
             searchByWoeid(response[0]?.woeid)
             .then(resolve => {
+                // console.log( currentLocation.name );
+                // console.log(resolve?.title);
+                // if( resolve?.title !== currentLocation.name ) setCurrentLocation({ name: currentLocation.name , active: false })
                 const nextDays = [ ...resolve?.consolidated_weather ];
                 const today = resolve?.consolidated_weather[0];
                 const img = getImage(today.weather_state_abbr);
@@ -116,16 +118,15 @@ function Home(){
         const getPosition = position => {
             const { latitude , longitude } = position.coords;
             searchByLattLong(latitude , longitude).then( response => {
-                fetchCity(response[0].title);
-                setIsCurrentLocation(true);
+                const name = response[0].title;
+                fetchCity(name);
             } )
         };
         const err = error => {
-            console.log( error );
-            //If the user doesn´t allow his location, the app will display san francisco´ stats
+            //If the user doesn´t allow his location, the app will display san francisco´s stats
             if( error.code === 1 ) return fetchCity('san');
 
-            //If the error exists, it will return the same called until it get the position correctly
+            //If the error exists, it will return the same called until it get the correct position
             if( error.code ) return geolocation.getCurrentPosition( getPosition , err , options );
         };
         const options = { enableHightAccuracy: true , timeout: 0 , maximumAge: 0 };     
@@ -178,8 +179,10 @@ function Home(){
 
 
                     <RecentSearches>
-                        <StyledH3 className='recents'>Recent searches</StyledH3>
-                        {
+                        <Span fz='20px' className='recents'>Recent searches</Span>
+                        { recentSearches.length===0 ? 
+                            <Span fz='14px'>You haven´t done any search</Span>
+                            :
                             recentSearches.map( (search,index) =>{
                                 return <Searched onClick={()=>fetchCity(search)} key={index}>{search}<Span fz='20px' className='arrow'>{'>'}</Span> </Searched>
                             } )
@@ -196,7 +199,7 @@ function Home(){
                         bg_color={ gray }
                         onClick={ changeShowSearch }
                     />
-                    <Circle content={<FontAwesomeIcon icon={ faCrosshairs }/>} onClick={ currentPosition } bg_color={ isCurrentLocation ? textColor : gray } />
+                    <Circle content={<FontAwesomeIcon icon={ faCrosshairs }/>} onClick={ currentPosition } bg_color={ gray } />
                 </SearchContainer>
                 
 
@@ -207,9 +210,9 @@ function Home(){
 
                 <Details>
                     <Span fz='40px'>{ isCelcius ? `${ roundValue(city.the_temp) }°C` : `${ convertToFh(city.the_temp) }°F`}</Span>
-                    <StyledH2 fz='1.5rem'>{ city.weather_state_name }</StyledH2>
-                    <StyledH3 fz='Ypx'>Today  -   { turnToDay(city.applicable_date) }</StyledH3>
-                    <StyledH3 fz='Ypx'>  {`${ city.title }, ${ city.parent?.title }`}</StyledH3>
+                    <Span fz='1.5rem'>{ city.weather_state_name }</Span>
+                    <Span fz='20px'>Today - { turnToDay(city.applicable_date) }</Span>
+                    <Span fz='20px'><FontAwesomeIcon icon={ faMapMarkerAlt }/>  {`${ city.title }, ${ city.parent?.title }`}</Span>
                 </Details>
 
             </City>
