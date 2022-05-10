@@ -1,26 +1,39 @@
 import styled from 'styled-components';
-import { backgroundColor , textColor } from '../../constants.js';
+import { backgroundColor , textColor , gray } from '../../constants.js';
 
 export const Container = styled.section`
+    @keyframes rotate{
+        from{ transform: rotate( 0deg ) }
+        to{ transform: rotate( 360deg ) }
+    }
+    @keyframes rotate2{
+        from{ transform: rotate( 90deg ) }
+        to{ transform: rotate( 0deg ) }
+    }
+
     display: grid;
     place-items: center;
     position: absolute;
     width: 100vw;
     height: 100vh;
     background-color: ${ backgroundColor };
-    color: ${ textColor };
 
-    & .tornado{
-        font-size: 500px;
-        animation-name: loop;
-        animation-duration: 600ms;
+    & .spinner{
+        position: absolute;
+        animation-duration: 1.6s;
         animation-iteration-count: infinite;
-        animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+        animation-timing-function: cubic-bezier(0.075, 1, 0.165, 1);
     }
 
-    @keyframes loop{
-        0%{ transform: rotateY( 180deg ) }
-        50%{ transform: rotateX( 180deg ) }
-        75%{ transform: rotateY( 180deg ) }
+    & .white{ 
+        font-size: 200px; 
+        color: ${ textColor };    
+        animation-name: rotate;
     }
-`
+
+    & .gray{ 
+        color: ${ gray };
+        font-size: 215px;     
+        animation-name: rotate2;
+    }
+`;

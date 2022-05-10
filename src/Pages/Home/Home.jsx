@@ -39,20 +39,16 @@ function Home(){
         setShowSearch(!showSearch);
     }
 
-    const preventReload = e => {
+    const searchCity = e => {
         e.preventDefault();
-    }
-
-    const searchCity = () => {
         if( !search ) return;
-        const recents = [ ...recentSearches ] ;
-        const recentsLower = recents.map( cities => cities.toLowerCase() );
-        const searchLower = search.toLowerCase();
-        if( recentsLower.some( cities =>  (cities === searchLower) || 
-        (cities.includes(searchLower)) ) ) return;
+        const recents = [ ...recentSearches ].map( cities => cities.toLowerCase() );
+        const searchLower = search.toLowerCase().trim();
+        
+        if( recents.some( cities =>  (cities === searchLower) || (cities.includes(searchLower)) ) ) return;
 
         fetchCity(search);
-        setSearch('');     
+        setSearch('');
     }
     
     const setRecents = () => {
@@ -74,7 +70,6 @@ function Home(){
         return `${ dayToDisplay[0] }, ${ dayToDisplay[2] } ${ dayToDisplay[1] }`
     }
 
-
     const fetchCity = searched => {
         setLoading(true);
 
@@ -82,9 +77,6 @@ function Home(){
         .then(response => {
             searchByWoeid(response[0]?.woeid)
             .then(resolve => {
-                // console.log( currentLocation.name );
-                // console.log(resolve?.title);
-                // if( resolve?.title !== currentLocation.name ) setCurrentLocation({ name: currentLocation.name , active: false })
                 const nextDays = [ ...resolve?.consolidated_weather ];
                 const today = resolve?.consolidated_weather[0];
                 const img = getImage(today.weather_state_abbr);
@@ -106,7 +98,7 @@ function Home(){
                     airPressure,
                     ...today 
                 });
-                setCounter( currCounter => currCounter + 1 )
+                setCounter( currCounter => currCounter + 1 );
                 setLoading(false);
             })
         })
@@ -118,10 +110,9 @@ function Home(){
 
         const getPosition = position => {
             const { latitude , longitude } = position.coords;
-            searchByLattLong(latitude , longitude).then( response => {
-                const name = response[0].title;
-                fetchCity(name);
-            } )
+            searchByLattLong( latitude , longitude ).then( response => {
+                fetchCity(response[0].title);
+            });
         };
         const err = error => {
             //If the user doesn´t allow his location, the app will display san francisco´s stats
@@ -130,7 +121,7 @@ function Home(){
             //If the error exists, it will return the same called until it get the correct position
             if( error.code ) return geolocation.getCurrentPosition( getPosition , err , options );
         };
-        const options = { enableHightAccuracy: true , timeout: 0 , maximumAge: 0 };     
+        const options = { enableHighAccuracy: true , timeout: 5000 , maximumAge: 0 };     
 
         geolocation.getCurrentPosition( getPosition , err , options );
     }
@@ -142,7 +133,6 @@ function Home(){
 
     useEffect( () => {
         setShowSearch(false);
-        // setIsCurrentLocation(false);
         setRecents();
     },[city])
 
@@ -155,7 +145,7 @@ function Home(){
         { ( !loading && counter>0 ) ? <Main>
             <City>
                 
-                { showSearch && <SearchCity className={ !showSearch ? 'hidden' : 'showing' } >
+                { showSearch && <SearchCity>
 
                     <SearchButton 
                         className='toggleButton' 
@@ -167,30 +157,32 @@ function Home(){
                         fz='18px'
                         onClick={ changeShowSearch }
                     />
-                    <SearchForm onSubmit={ preventReload }>
+                    <SearchForm onSubmit={ searchCity }>
                         <SearchInput value={ search } onChange={ changeSearch } placeholder='Search a City'/>
                         <SearchButton 
                         className='inputForm' 
                         type='submit' 
                         value='Search' 
-                        bg_color='#3e4af0'
-                        onClick={ searchCity }                 
+                        bg_color='#3e4af0'               
                         />
                     </SearchForm>
 
-
                     <RecentSearches>
                         <Span fz='20px' className='recents'>Recent searches</Span>
-                        { recentSearches.length===0 ? 
-                            <Span fz='14px'>You haven´t done any search</Span>
+                        { !recentSearches.length ? 
+                            <Span fz='14px'>You´ve not done any search</Span>
                             :
-                            recentSearches.map( (search,index) =>{
-                                return <Searched onClick={()=>fetchCity(search)} key={index}>{search}<Span fz='20px' className='arrow'>{'>'}</Span> </Searched>
+                            recentSearches.map( ( search , index ) =>{
+                                return <Searched 
+                                onClick={()=>fetchCity(search)} 
+                                key={ index }>
+                                    { search }<Span fz='20px' className='arrow'>{'>'}</Span> 
+                                </Searched>
                             } )
                         }
                     </RecentSearches>
 
-                </SearchCity>    }   
+                </SearchCity> }   
 
                 <SearchContainer>
                     <SearchButton 
@@ -203,7 +195,6 @@ function Home(){
                     <Circle content={<FontAwesomeIcon icon={ faCrosshairs }/>} onClick={ currentPosition } bg_color={ gray } />
                 </SearchContainer>
                 
-
                 <WeatherImages >
                     <BackImg src='https://i.imgur.com/tQD1Cvm.png'/>
                     <StateImg src={ city.img }/>

@@ -1,4 +1,4 @@
-import { API_URL } from '../API.js';
+import { API_URL } from '../api.js';
 
 const fetchData = async url => {
     try{

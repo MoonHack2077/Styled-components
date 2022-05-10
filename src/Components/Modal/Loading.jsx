@@ -2,12 +2,13 @@ import React from 'react'
 import { Container } from './Loading.style.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTornado } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 function Loading() {
   return (
     <Container>
-        <FontAwesomeIcon className='tornado' icon={ faTornado } />
+        <FontAwesomeIcon className='spinner white' icon={ faSpinner } />
+        <FontAwesomeIcon className='spinner gray' icon={ faSpinner } />
     </Container>    
   )
 }

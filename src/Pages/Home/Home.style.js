@@ -35,15 +35,9 @@ export const City = styled.aside`
     }
 `
 export const SearchCity = styled.aside`
-
     @keyframes appear{
         from{ transform: translateX(-100%) }
         to{ transform: translateX(0) }
-    }
-
-    @keyframes disappear{
-        from{ transform: translateX(0) }
-        to{ transform: translateX(100%) }
     }
 
     padding: 0 40px;
@@ -52,15 +46,8 @@ export const SearchCity = styled.aside`
     width: 100%;
     height: 100vh;
     background-color: ${ primaryColor };
-    z-index: 1000;  
-        
-    &.showing{
-        animation: appear 1s ease-in-out forwards;
-    }
-
-    &.hidden{
-        animation: disappear 3s ease-in-out forwards;
-    }
+    z-index: 1000; 
+    animation: appear 700ms ease-in-out forwards;
 
     @media screen and (min-width: 1000px){
         position: absolute;
@@ -107,18 +94,11 @@ export const SearchButton = styled.input`
     &.inputForm{
         margin-left: 20px;
     }
-
-    /* @media screen and (min-width: 1000px){
-        &.toggleButton{
-            position: absolute;
-        }
-    } */
 `
 export const RecentSearches = styled.ul`
     display: flex;
     justify-content: center;
     flex-direction: column;
-    /* height: auto; */
     width: 80%;
     margin: 0;
 `
@@ -129,6 +109,7 @@ export const Searched = styled.li`
     padding: 0 10px;
     list-style-type: none;
     height: 60px;
+
     &.arrow{
         display: none;
     }
@@ -265,7 +246,6 @@ export const Footer = styled.footer`
 `
 export const MyGitHub = styled.a`
     font-weight: bold;
-    /* text-decoration: line-through; */
     color: ${ textColor };
     font-size: ${ ({ fz }) => fz };
 `
