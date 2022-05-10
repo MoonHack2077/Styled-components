@@ -1,5 +1,5 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , MyGitHub , SearchContainer , SwitchTemperature ,RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
+import { Main , City , MyGitHub , Announce , SearchContainer , SwitchTemperature ,RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
 import { Circle } from '../../Components/Circle/Circle.jsx';
@@ -245,7 +245,10 @@ function Home(){
                 </Stats>
 
                 <Footer>
-                    <Span>created by <MyGitHub href='https://github.com/MoonHack2077' target='_blank' fz='17px'>MoonHack2077</MyGitHub> - devChallenges.io</Span>
+                    <Span>created by <MyGitHub href='https://github.com/MoonHack2077' target='_blank' fz='17px'>MoonHack2077</MyGitHub> - devChallenges.io</Span>                    
+                    <Announce>
+                        <Span className='announce'>You can toggle the search view pushing "/" key!!</Span>
+                    </Announce>
                 </Footer>
             </RightSide>
         </Main>

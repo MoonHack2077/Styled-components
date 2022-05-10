@@ -163,26 +163,17 @@ export const Span = styled.span`
     &.indicator{
         text-align: start;
     }
-
     &.recents{
         margin: 20px 0;
     }
-`
-export const ContainerSpan = styled.div`
-    @media screen and (min-width: 1000px){
-        text-align: left;
+    &.announce{
+        font-weight: bold;
     }
-`
 
-export const StyledH3 = styled.h3`
-    display: inline-block;
-    margin: 0;
 `
-
 export const RightSide = styled.section`
     margin: 0;
 `
-
 export const Stats = styled.section`
     display: flex;
     justify-content: center;
@@ -239,8 +230,8 @@ export const HighLights = styled.div`
     height: auto;
 `
 export const Footer = styled.footer`
-    position: relative;
-    bottom: 0;
+    /* position: relative;
+    bottom: 0; */
     width: 100%;
     text-align: center;
 `
@@ -263,7 +254,6 @@ export const SwitchTemperature = styled.div`
         display: flex;
     }
 `
-
 export const SearchContainer = styled.div`
     display: flex;
     align-items : center;
@@ -272,4 +262,24 @@ export const SearchContainer = styled.div`
     position: absolute;
     top: 0;
     padding: 10px 20px;
+`
+export const Announce = styled.div`
+    @keyframes jump-in{
+        0%{ transform: translateY(100px) }
+        50%{ transform: translateY(-100%) }
+        100%{ transform: translateY(100px) }
+    }
+
+    display: none;
+    position: absolute;
+    right: 10px;
+    background-color: ${ primaryColor };
+    padding: 5px 10px;
+    color: ${ textColor };
+    filter: opacity(.7);
+    animation: jump-in 5s ease-in-out forwards;
+
+    @media screen and (min-width: 1000px){
+        display: block;
+    }
 `
