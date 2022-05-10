@@ -39,12 +39,17 @@ function Home(){
         setShowSearch(!showSearch);
     }
 
+    //In order to the user will have a good experience, he could display the search form just pushing the key : '/' 
+    window.addEventListener( 'keyup' , e => {
+        if(e.key === '/') changeShowSearch();
+    } );
+
     const searchCity = e => {
         e.preventDefault();
         if( !search ) return;
         const recents = [ ...recentSearches ].map( cities => cities.toLowerCase() );
         const searchLower = search.toLowerCase().trim();
-        
+
         if( recents.some( cities =>  (cities === searchLower) || (cities.includes(searchLower)) ) ) return;
 
         fetchCity(search);
