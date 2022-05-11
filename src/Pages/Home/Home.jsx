@@ -41,7 +41,7 @@ function Home(){
 
     //In order to the user will have a good experience, he could display the search form just pushing the key : '/' 
     window.addEventListener( 'keyup' , e => {
-        if(e.key === '/') changeShowSearch();
+        if( e.key === '/' ) changeShowSearch();
     } );
 
     const searchCity = e => {
@@ -84,12 +84,12 @@ function Home(){
             .then(resolve => {
                 const nextDays = [ ...resolve?.consolidated_weather ];
                 const today = resolve?.consolidated_weather[0];
-                const img = getImage(today.weather_state_abbr);
-                const windDirection = today.wind_direction;
-                const visibility = today.visibility;
-                const temp = today.the_temp;
-                const humidity = today.humidity;
-                const airPressure = today.air_pressure;
+                const img = getImage(today?.weather_state_abbr);
+                const windDirection = today?.wind_direction;
+                const visibility = today?.visibility;
+                const temp = today?.the_temp;
+                const humidity = today?.humidity;
+                const airPressure = today?.air_pressure;
 
                 setDays(nextDays.slice(1));
                 setCity({ 
@@ -247,7 +247,7 @@ function Home(){
                 <Footer>
                     <Span>created by <MyGitHub href='https://github.com/MoonHack2077' target='_blank' fz='17px'>MoonHack2077</MyGitHub> - devChallenges.io</Span>                    
                     <Announce>
-                        <Span className='announce'>You can toggle the search view pushing "/" key!!</Span>
+                        <Span className='announce'>Toggle the search view pushing the key " / "</Span>
                     </Announce>
                 </Footer>
             </RightSide>

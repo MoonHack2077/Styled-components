@@ -47,7 +47,7 @@ export const SearchCity = styled.aside`
     height: 100vh;
     background-color: ${ primaryColor };
     z-index: 1000; 
-    animation: appear 700ms ease-in-out forwards;
+    animation: appear 1.5s ease forwards;
 
     @media screen and (min-width: 1000px){
         position: absolute;
@@ -230,8 +230,8 @@ export const HighLights = styled.div`
     height: auto;
 `
 export const Footer = styled.footer`
-    /* position: relative;
-    bottom: 0; */
+    position: relative;
+    bottom: 0;
     width: 100%;
     text-align: center;
 `
@@ -265,21 +265,21 @@ export const SearchContainer = styled.div`
 `
 export const Announce = styled.div`
     @keyframes jump-in{
-        0%{ transform: translateY(100px) }
-        50%{ transform: translateY(-100%) }
-        100%{ transform: translateY(100px) }
+        0%{ transform: translateY(0); filter: opacity(.5); }
+        50%{ transform: translateY(-100%); filter: opacity(1); }
+        100%{ transform: translateY(0); filter: opacity(0); }
     }
 
     display: none;
-    position: absolute;
-    right: 10px;
-    background-color: ${ primaryColor };
-    padding: 5px 10px;
-    color: ${ textColor };
-    filter: opacity(.7);
-    animation: jump-in 5s ease-in-out forwards;
-
     @media screen and (min-width: 1000px){
-        display: block;
+        display: flex;
+        position: absolute;
+        top: -10px;
+        right: 30px;
+        background-color: ${ primaryColor };
+        padding: 5px 10px;
+        max-width: 200px;
+        color: ${ textColor };
+        animation: jump-in 5s cubic-bezier(.07,.93,.54,-0.05) forwards;
     }
 `
