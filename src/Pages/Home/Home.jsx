@@ -1,33 +1,35 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , MyGitHub , RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , StyledH2 , StyledH3 , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
+import { Main , City , MyGitHub , SearchContainer , SwitchTemperature ,RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
+import { Circle } from '../../Components/Circle/Circle.jsx';
+import { Loading } from '../../Components/Modal/Loading.jsx';
+import { gray , textColor } from '../../constants.js';
 
-import { locationSearch , locationId } from '../../Services/fetches.js';
+import { searchByCityName , searchByWoeid , searchByLattLong } from '../../Services/fetches.js';
 import { getImage } from '../../Helpers/getImage.js';
-import { round } from '../../Helpers/roundTemp.js';
+import { roundValue } from '../../Helpers/roundValue.js';
+import { convertToFh } from '../../Helpers/convertToFh.js';
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt , faCrosshairs } from '@fortawesome/free-solid-svg-icons';
 
-const KEY = 'recentSearches';
+const KEY = 'RECENTSEARCHES';
 
 function Home(){
-    const searches = localStorage.getItem( KEY ) ? localStorage.getItem( KEY ) : [];
+    //Variable to kwon if there are searches at the localStorage
+    const searches = localStorage.getItem( KEY ) ? JSON.parse( localStorage.getItem( KEY ) ) : [];
 
     //Declaring states
     const [ days , setDays ] = useState([]);
     const [ city , setCity ] = useState({});
     const [ search , setSearch ] = useState('');
-    const [ recentSearches , setRecentSearches ] = useState( searches );
+    const [ recentSearches , setRecentSearches ] = useState(searches);
     const [ loading , setLoading ] = useState(false);
     const [ showSearch , setShowSearch ] = useState(false);
     const [ counter , setCounter ] = useState(0);
-
-    //This is the city that will appear by default
-    //Even thoug this will become to the user´s current location 
-    const cityByDefault = 'san';
+    const [ isCelcius , setIsCelcius ] = useState(true);
 
     const changeSearch = e => {
         setSearch(e.target.value);
@@ -37,20 +39,16 @@ function Home(){
         setShowSearch(!showSearch);
     }
 
-    const preventReload = e => {
+    const searchCity = e => {
         e.preventDefault();
-    }
-
-    const searchCity = () => {
         if( !search ) return;
-        const recents = [ ...recentSearches ] ;
-        const recentsLower = recents.map( cities => cities.toLowerCase() );
-        const searchLower = search.toLowerCase();
-        if( recentsLower.some( cities =>  (cities === searchLower) || 
-        (cities.includes(searchLower)) ) ) return;
+        const recents = [ ...recentSearches ].map( cities => cities.toLowerCase() );
+        const searchLower = search.toLowerCase().trim();
+        
+        if( recents.some( cities =>  (cities === searchLower) || (cities.includes(searchLower)) ) ) return;
 
         fetchCity(search);
-        setSearch('');     
+        setSearch('');
     }
     
     const setRecents = () => {
@@ -64,26 +62,34 @@ function Home(){
         setRecentSearches(recents);      
     }
 
+    const turnToDay = date => {
+        const day = new Date(date);
+
+        //return the first 3 elements (day , month and date), those are what I need to display
+        const dayToDisplay = day.toString().split(' ').splice(0,3);
+        return `${ dayToDisplay[0] }, ${ dayToDisplay[2] } ${ dayToDisplay[1] }`
+    }
+
     const fetchCity = searched => {
         setLoading(true);
 
-        locationSearch(searched)
+        searchByCityName(searched)
         .then(response => {
-            locationId(response[0].woeid)
+            searchByWoeid(response[0]?.woeid)
             .then(resolve => {
-                const nextDays = [ ...resolve.consolidated_weather ];
-                const today = resolve.consolidated_weather[0];
+                const nextDays = [ ...resolve?.consolidated_weather ];
+                const today = resolve?.consolidated_weather[0];
                 const img = getImage(today.weather_state_abbr);
-                const windDirection = round(today.wind_direction);
-                const visibility = round(today.visibility);
-                const temp = round(today.the_temp);
-                const humidity = round(today.humidity);
-                const airPressure = round(today.air_pressure);
+                const windDirection = today.wind_direction;
+                const visibility = today.visibility;
+                const temp = today.the_temp;
+                const humidity = today.humidity;
+                const airPressure = today.air_pressure;
 
                 setDays(nextDays.slice(1));
                 setCity({ 
-                    title: resolve.title,  
-                    parent: resolve.parent.title, 
+                    title: resolve?.title,  
+                    parent: resolve?.parent, 
                     img,
                     windDirection,
                     temp,
@@ -92,16 +98,37 @@ function Home(){
                     airPressure,
                     ...today 
                 });
-                setCounter( currCounter => currCounter + 1 )
+                setCounter( currCounter => currCounter + 1 );
                 setLoading(false);
             })
         })
         .catch(console.log)
     }
 
+    const currentPosition = () => {
+        const { geolocation } = navigator;
+
+        const getPosition = position => {
+            const { latitude , longitude } = position.coords;
+            searchByLattLong( latitude , longitude ).then( response => {
+                fetchCity(response[0].title);
+            });
+        };
+        const err = error => {
+            //If the user doesn´t allow his location, the app will display san francisco´s stats
+            if( error.code === 1 ) return fetchCity('san');
+
+            //If the error exists, it will return the same called until it get the correct position
+            if( error.code ) return geolocation.getCurrentPosition( getPosition , err , options );
+        };
+        const options = { enableHighAccuracy: true , timeout: 5000 , maximumAge: 0 };     
+
+        geolocation.getCurrentPosition( getPosition , err , options );
+    }
+
     //UseEffects
     useEffect( () => {
-        fetchCity(cityByDefault);
+        currentPosition();
     },[])
 
     useEffect( () => {
@@ -115,7 +142,7 @@ function Home(){
 
     return(
         <>
-        { !loading && <Main>
+        { ( !loading && counter>0 ) ? <Main>
             <City>
                 
                 { showSearch && <SearchCity>
@@ -125,69 +152,76 @@ function Home(){
                         type='button' 
                         value='X'
                         bg_color='transparent'
-                        right='5px'   
+                        right='150px'   
                         top='10px'
                         fz='18px'
                         onClick={ changeShowSearch }
                     />
-                    <SearchForm onSubmit={ preventReload }>
+                    <SearchForm onSubmit={ searchCity }>
                         <SearchInput value={ search } onChange={ changeSearch } placeholder='Search a City'/>
                         <SearchButton 
                         className='inputForm' 
                         type='submit' 
                         value='Search' 
-                        bg_color='#3e4af0'
-                        onClick={ searchCity }
-                        bg_color_h='#2d39e0'                  
+                        bg_color='#3e4af0'               
                         />
                     </SearchForm>
 
-
                     <RecentSearches>
-                        <StyledH3 className='recents'>Recent searches</StyledH3>
-                        {
-                            recentSearches.map( (search,index) =>{
-                                return <Searched onClick={()=>fetchCity(search)} key={index}>{search}<Span fz='20px' className='arrow'>{'>'}</Span> </Searched>
+                        <Span fz='20px' className='recents'>Recent searches</Span>
+                        { !recentSearches.length ? 
+                            <Span fz='14px'>You´ve not done any search</Span>
+                            :
+                            recentSearches.map( ( search , index ) =>{
+                                return <Searched 
+                                onClick={()=>fetchCity(search)} 
+                                key={ index }>
+                                    { search }<Span fz='20px' className='arrow'>{'>'}</Span> 
+                                </Searched>
                             } )
                         }
                     </RecentSearches>
 
-                </SearchCity>    }   
+                </SearchCity> }   
 
-                <SearchButton 
-                    className='toggleButton' 
-                    type='button' 
-                    value='Search for cities'  
-                    bg_color='#888'
-                    bg_color_h='#666'
-                    left='20px'   
-                    top='20px'
-                    onClick={ changeShowSearch }
-                />
-
+                <SearchContainer>
+                    <SearchButton 
+                        className='toggleButton' 
+                        type='button' 
+                        value='Search for cities'  
+                        bg_color={ gray }
+                        onClick={ changeShowSearch }
+                    />
+                    <Circle content={<FontAwesomeIcon icon={ faCrosshairs }/>} onClick={ currentPosition } bg_color={ gray } />
+                </SearchContainer>
+                
                 <WeatherImages >
                     <BackImg src='https://i.imgur.com/tQD1Cvm.png'/>
                     <StateImg src={ city.img }/>
                 </WeatherImages>
 
                 <Details>
-                    <Span fz='40px'>{`${ city.the_temp } °C`}</Span>
-                    <StyledH2 fz='1.5rem'>{ city.weather_state_name }</StyledH2>
-                    <StyledH3 fz='Ypx'>{`Today - ${ city.applicable_date }`}</StyledH3>
-                    <StyledH3 fz='Ypx'> <FontAwesomeIcon icon={ faMapMarkerAlt }/> {`${ city.title }, ${ city.parent }`}</StyledH3>
+                    <Span fz='40px'>{ isCelcius ? `${ roundValue(city.the_temp) }°C` : `${ convertToFh(city.the_temp) }°F`}</Span>
+                    <Span fz='1.5rem'>{ city.weather_state_name }</Span>
+                    <Span fz='20px'>Today - { turnToDay(city.applicable_date) }</Span>
+                    <Span fz='20px'><FontAwesomeIcon icon={ faMapMarkerAlt }/>  {`${ city.title }, ${ city.parent?.title }`}</Span>
                 </Details>
 
             </City>
             <RightSide>
+                <SwitchTemperature>
+                    <Circle content='°C' onClick={ () => setIsCelcius(true) }  bg_color={ isCelcius ? textColor : gray } />
+                    <Circle content='°F' onClick={ () => setIsCelcius(false) } bg_color={ !isCelcius ? textColor : gray } />
+                </SwitchTemperature>
                 <Stats>
                     <Days>
                         { days.map( day => {
                             const img = getImage(day.weather_state_abbr);
                             return <NextDay
                                 key={ day.id } 
-                                date={ day.applicable_date } 
-                                min_temp={ round(day.min_temp) }
-                                max_temp={ round(day.max_temp) } 
+                                date={ day===days[0] ? 'Tomorrow' : turnToDay(day.applicable_date) } 
+                                min_temp={ isCelcius ? `${roundValue(day.min_temp)}°C` : `${convertToFh(day.min_temp)}°F`}
+                                max_temp={ isCelcius ? `${roundValue(day.max_temp)}°C` : `${convertToFh(day.max_temp)}°F`} 
                                 img={ img }
                             />
                         } ) }
@@ -210,6 +244,7 @@ function Home(){
                 </Footer>
             </RightSide>
         </Main>
+        : <Loading/>
     }
     </>
     );
