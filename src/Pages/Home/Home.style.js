@@ -144,9 +144,9 @@ export const BackImg = styled.img`
         transform: scale(1.1);
     }
 `
-export const StateImg = styled.img`
-    width: 200px;
-    height: 200px;
+export const Img = styled.img`
+    width: ${ ({width}) => width }  ;
+    height: ${ ({height}) => height };
 `
 export const Details = styled.div`
     display: flex;
@@ -162,9 +162,6 @@ export const Span = styled.span`
 
     &.indicator{
         text-align: start;
-    }
-    &.recents{
-        margin: 20px 0;
     }
     &.announce{
         font-weight: bold;

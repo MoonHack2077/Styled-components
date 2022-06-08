@@ -1,5 +1,5 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , MyGitHub , Announce , SearchContainer , SwitchTemperature ,RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
+import { Main , City , MyGitHub , Announce , SearchContainer , SwitchTemperature ,RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , Img , Details , Span , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
 import { Circle } from '../../Components/Circle/Circle.jsx';
@@ -202,7 +202,7 @@ function Home(){
                 
                 <WeatherImages >
                     <BackImg src='https://i.imgur.com/tQD1Cvm.png'/>
-                    <StateImg src={ city.img }/>
+                    <Img height='200px' width='200px' src={ city.img }/>
                 </WeatherImages>
 
                 <Details>
@@ -245,7 +245,7 @@ function Home(){
                 </Stats>
 
                 <Footer>
-                    <Span>created by <MyGitHub href='https://github.com/MoonHack2077' target='_blank' fz='17px'>MoonHack2077</MyGitHub> - devChallenges.io</Span>                    
+                    <Span>created by <MyGitHub href='https://github.com/MoonHack2077' target='_blank' fz='17px'>MoonHack2077</MyGitHub> - devChallenges.io <Img src='https://i.imgur.com/2mvyYYQ.png' height='10px' width='10px' /> </Span>                    
                     <Announce>
                         <Span className='announce'>Toggle the search view pushing the key " / "</Span>
                     </Announce>
