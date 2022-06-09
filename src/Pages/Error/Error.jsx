@@ -1,8 +1,20 @@
-import React from 'react';
+import React , { useEffect } from 'react';
+import { useSetRecentSearches } from '../../Services/recentSearches.js';
 import { Container , Img , Div , P , List , City } from './Error.style.js';
 
-function Error(){
-    const offeredCities = ['London', 'Calarca', 'Eren'];
+function Error(){    
+    const [ recentSearches ] = useSetRecentSearches();
+    const list = [];
+    const randomNum = () => Math.floor(Math.random() * recentSearches.length);
+    const set = () =>{
+        const city = recentSearches[randomNum()];
+        if( list.length === 3 ) list.splice(-1);
+        if( !list[city] ) list.push(city);       
+    }
+    useEffect( ()=>{
+        set();
+    },[recentSearches] )
+
     return(
         <Container>
             <Div>
@@ -12,7 +24,7 @@ function Error(){
                 <P>Try searching these cities:</P>
                 <List>
                     {
-                        offeredCities.map( (city,id) =>{
+                        list.map( (city,id) =>{
                             return <City key={id}>{city}</City>
                         } )
                     }        

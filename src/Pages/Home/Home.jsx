@@ -4,9 +4,10 @@ import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
 import { Circle } from '../../Components/Circle/Circle.jsx';
 import { Loading } from '../../Components/Modal/Loading.jsx';
-import { gray , textColor } from '../../constants.js';
+import { gray , textColor , KEY } from '../../constants.js';
 
 import { searchByCityName , searchByWoeid , searchByLattLong } from '../../Services/fetches.js';
+import { useSetRecentSearches } from '../../Services/recentSearches.js'
 import { getImage } from '../../Helpers/getImage.js';
 import { roundValue } from '../../Helpers/roundValue.js';
 import { convertToFh } from '../../Helpers/convertToFh.js';
@@ -15,17 +16,14 @@ import { convertToFh } from '../../Helpers/convertToFh.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt , faCrosshairs } from '@fortawesome/free-solid-svg-icons';
 
-const KEY = 'RECENTSEARCHES';
+
 
 function Home(){
-    //Variable to kwon if there are searches at the localStorage
-    const searches = localStorage.getItem( KEY ) ? JSON.parse( localStorage.getItem( KEY ) ) : [];
-
     //Declaring states
     const [ days , setDays ] = useState([]);
     const [ city , setCity ] = useState({});
     const [ search , setSearch ] = useState('');
-    const [ recentSearches , setRecentSearches ] = useState(searches);
+    const [ recentSearches , setRecentSearches ] = useSetRecentSearches();
     const [ loading , setLoading ] = useState(false);
     const [ showSearch , setShowSearch ] = useState(false);
     const [ counter , setCounter ] = useState(0);
@@ -121,7 +119,7 @@ function Home(){
         };
         const err = error => {
             //If the user doesn´t allow his location, the app will display san francisco´s stats
-            if( error.code === 1 ) return fetchCity('san');
+            if( error.code === 1 ) return fetchCity('london');
 
             //If the error exists, it will return the same called until it get the correct position
             if( error.code ) return geolocation.getCurrentPosition( getPosition , err , options );
