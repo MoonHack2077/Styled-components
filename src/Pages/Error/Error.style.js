@@ -18,17 +18,17 @@ export const Container = styled.section`
     overflow: hidden;
 `
 
-//const randomNum = Math.floor(Math.random()*1001);
+const randomNum = () => Math.floor(Math.random()*1001);
 
 export const Img = styled.img`
     @keyframes first {
-        from{ transform: translate(-2000px) rotate(90deg); filter: brightness(100%) }
-        to{ transform: translate(2000px) rotate(360deg); filter: brightness(70%) }
+        from{ left: 0; bottom: 0; transform: rotate(0deg); filter: brightness(100%) }  
+        to{ left: 100%; bottom:100%; transform: rotate(360deg); filter: brightness(40%) }
     }
 
     @keyframes second {
-        from{ transform: translate(2000px) rotate(360deg); filter: brightness(100%) }
-        to{  transform: translate(-2000px) rotate(90deg); filter: brightness(70%) }
+        from{ right: 0; top:0; transform: rotate(360deg); filter: brightness(100%) }
+        to{ right: 100%; top:100%; transform: rotate(0deg); filter: brightness(70%) }
     }
 
     position: absolute;
@@ -52,20 +52,29 @@ export const Div = styled.div`
     filter: brightness(100%);
     border-radius: 30px;
     max-width: 700px;
-    //height: 300px;
+    background-color: ${primaryColor};
     padding: 30px;
+    margin: 0 20px;
     color: ${textColor};
 `
 export const P = styled.p`
     margin: 0;
 `
 export const List = styled.ul`
-    outline: 2px solid blue;
-    //width: 100%;
-    //height: auto;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
 `
 export const City = styled.li`
-    outline: 1px solid green;
-    width: 100%;
+    display: grid;
+    place-items: center;
+    list-style-type: none;
+
+    &:hover{
+        background-color: ${textColor};
+        color: ${backgroundColor};
+        cursor: pointer;
+    }
+    width: 100px;
     height: 50px;
 `
