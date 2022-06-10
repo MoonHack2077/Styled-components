@@ -47,7 +47,7 @@ export const SearchCity = styled.aside`
     height: 100vh;
     background-color: ${ primaryColor };
     z-index: 1000; 
-    animation: appear 700ms ease-in-out forwards;
+    animation: appear 1.5s ease forwards;
 
     @media screen and (min-width: 1000px){
         position: absolute;
@@ -144,9 +144,9 @@ export const BackImg = styled.img`
         transform: scale(1.1);
     }
 `
-export const StateImg = styled.img`
-    width: 200px;
-    height: 200px;
+export const Img = styled.img`
+    width: ${ ({width}) => width }  ;
+    height: ${ ({height}) => height };
 `
 export const Details = styled.div`
     display: flex;
@@ -163,26 +163,14 @@ export const Span = styled.span`
     &.indicator{
         text-align: start;
     }
-
-    &.recents{
-        margin: 20px 0;
+    &.announce{
+        font-weight: bold;
     }
-`
-export const ContainerSpan = styled.div`
-    @media screen and (min-width: 1000px){
-        text-align: left;
-    }
-`
 
-export const StyledH3 = styled.h3`
-    display: inline-block;
-    margin: 0;
 `
-
 export const RightSide = styled.section`
     margin: 0;
 `
-
 export const Stats = styled.section`
     display: flex;
     justify-content: center;
@@ -263,7 +251,6 @@ export const SwitchTemperature = styled.div`
         display: flex;
     }
 `
-
 export const SearchContainer = styled.div`
     display: flex;
     align-items : center;
@@ -272,4 +259,24 @@ export const SearchContainer = styled.div`
     position: absolute;
     top: 0;
     padding: 10px 20px;
+`
+export const Announce = styled.div`
+    @keyframes jump-in{
+        0%{ transform: translateY(0); filter: opacity(.5); }
+        50%{ transform: translateY(-100%); filter: opacity(1); }
+        100%{ transform: translateY(0); filter: opacity(0); }
+    }
+
+    display: none;
+    @media screen and (min-width: 1000px){
+        display: flex;
+        position: absolute;
+        top: -10px;
+        right: 30px;
+        background-color: ${ primaryColor };
+        padding: 5px 10px;
+        max-width: 200px;
+        color: ${ textColor };
+        animation: jump-in 5s cubic-bezier(.07,.93,.54,-0.05) forwards;
+    }
 `

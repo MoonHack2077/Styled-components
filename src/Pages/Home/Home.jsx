@@ -1,12 +1,14 @@
 import React , { useState , useEffect } from 'react';
-import { Main , City , MyGitHub , SearchContainer , SwitchTemperature ,RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , StateImg , Details , Span , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
+import { useNavigate  } from 'react-router-dom';
+import { Main , City , MyGitHub , Announce , SearchContainer , SwitchTemperature ,RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , Img , Details , Span , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
 import { Circle } from '../../Components/Circle/Circle.jsx';
 import { Loading } from '../../Components/Modal/Loading.jsx';
-import { gray , textColor } from '../../constants.js';
+import { gray , textColor , KEY } from '../../constants.js';
 
 import { searchByCityName , searchByWoeid , searchByLattLong } from '../../Services/fetches.js';
+import { useSetRecentSearches } from '../../Services/recentSearches.js'
 import { getImage } from '../../Helpers/getImage.js';
 import { roundValue } from '../../Helpers/roundValue.js';
 import { convertToFh } from '../../Helpers/convertToFh.js';
@@ -15,22 +17,20 @@ import { convertToFh } from '../../Helpers/convertToFh.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt , faCrosshairs } from '@fortawesome/free-solid-svg-icons';
 
-const KEY = 'RECENTSEARCHES';
+
 
 function Home(){
-    //Variable to kwon if there are searches at the localStorage
-    const searches = localStorage.getItem( KEY ) ? JSON.parse( localStorage.getItem( KEY ) ) : [];
-
     //Declaring states
     const [ days , setDays ] = useState([]);
     const [ city , setCity ] = useState({});
     const [ search , setSearch ] = useState('');
-    const [ recentSearches , setRecentSearches ] = useState(searches);
+    const [ recentSearches , setRecentSearches ] = useSetRecentSearches();
     const [ loading , setLoading ] = useState(false);
     const [ showSearch , setShowSearch ] = useState(false);
     const [ counter , setCounter ] = useState(0);
     const [ isCelcius , setIsCelcius ] = useState(true);
 
+    const navigate = useNavigate();
     const changeSearch = e => {
         setSearch(e.target.value);
     }
@@ -39,12 +39,17 @@ function Home(){
         setShowSearch(!showSearch);
     }
 
+    //In order to the user will have a good experience, he could display the search form just pushing the key : '/' 
+    window.addEventListener( 'keyup' , e => {
+        if( e.key === '/' ) changeShowSearch();
+    } );
+
     const searchCity = e => {
         e.preventDefault();
         if( !search ) return;
         const recents = [ ...recentSearches ].map( cities => cities.toLowerCase() );
         const searchLower = search.toLowerCase().trim();
-        
+
         if( recents.some( cities =>  (cities === searchLower) || (cities.includes(searchLower)) ) ) return;
 
         fetchCity(search);
@@ -79,12 +84,12 @@ function Home(){
             .then(resolve => {
                 const nextDays = [ ...resolve?.consolidated_weather ];
                 const today = resolve?.consolidated_weather[0];
-                const img = getImage(today.weather_state_abbr);
-                const windDirection = today.wind_direction;
-                const visibility = today.visibility;
-                const temp = today.the_temp;
-                const humidity = today.humidity;
-                const airPressure = today.air_pressure;
+                const img = getImage(today?.weather_state_abbr);
+                const windDirection = today?.wind_direction;
+                const visibility = today?.visibility;
+                const temp = today?.the_temp;
+                const humidity = today?.humidity;
+                const airPressure = today?.air_pressure;
 
                 setDays(nextDays.slice(1));
                 setCity({ 
@@ -102,7 +107,9 @@ function Home(){
                 setLoading(false);
             })
         })
-        .catch(console.log)
+        .catch(() =>{
+            navigate('*');
+        })
     }
 
     const currentPosition = () => {
@@ -116,7 +123,7 @@ function Home(){
         };
         const err = error => {
             //If the user doesn´t allow his location, the app will display san francisco´s stats
-            if( error.code === 1 ) return fetchCity('san');
+            if( error.code === 1 ) return fetchCity('london');
 
             //If the error exists, it will return the same called until it get the correct position
             if( error.code ) return geolocation.getCurrentPosition( getPosition , err , options );
@@ -197,7 +204,7 @@ function Home(){
                 
                 <WeatherImages >
                     <BackImg src='https://i.imgur.com/tQD1Cvm.png'/>
-                    <StateImg src={ city.img }/>
+                    <Img height='200px' width='200px' src={ city.img }/>
                 </WeatherImages>
 
                 <Details>
@@ -240,7 +247,10 @@ function Home(){
                 </Stats>
 
                 <Footer>
-                    <Span>created by <MyGitHub href='https://github.com/MoonHack2077' target='_blank' fz='17px'>MoonHack2077</MyGitHub> - devChallenges.io</Span>
+                    <Span>created by <MyGitHub href='https://github.com/MoonHack2077' target='_blank' fz='17px'>MoonHack2077</MyGitHub> - devChallenges.io <Img src='https://i.imgur.com/2mvyYYQ.png' height='10px' width='10px' /> </Span>                    
+                    <Announce>
+                        <Span className='announce'>Toggle the search view pushing the key " / "</Span>
+                    </Announce>
                 </Footer>
             </RightSide>
         </Main>
