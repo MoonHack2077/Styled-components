@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container , Img , Div , P } from './Error.style.js';
+
 function Error(){ 
     return(
         <Container>

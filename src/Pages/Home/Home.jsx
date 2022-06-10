@@ -1,4 +1,5 @@
 import React , { useState , useEffect } from 'react';
+import { useNavigate  } from 'react-router-dom';
 import { Main , City , MyGitHub , Announce , SearchContainer , SwitchTemperature ,RightSide , HighLights , BackImg , Footer , SearchCity , SearchForm , SearchInput , SearchButton , WeatherImages , Img , Details , Span , Stats , Days , RecentSearches , Searched , StatusContainer } from './Home.style.js';
 import { NextDay } from '../../Components/NextDay/NextDay.jsx';
 import { Status } from '../../Components/Status/Status.jsx';
@@ -29,6 +30,7 @@ function Home(){
     const [ counter , setCounter ] = useState(0);
     const [ isCelcius , setIsCelcius ] = useState(true);
 
+    const navigate = useNavigate();
     const changeSearch = e => {
         setSearch(e.target.value);
     }
@@ -105,7 +107,9 @@ function Home(){
                 setLoading(false);
             })
         })
-        .catch(console.log)
+        .catch(() =>{
+            navigate('*');
+        })
     }
 
     const currentPosition = () => {
