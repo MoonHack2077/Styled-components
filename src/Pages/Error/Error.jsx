@@ -1,16 +1,27 @@
-import React , { useEffect } from 'react';
+import React , { useEffect , useState } from 'react';
 import { useSetRecentSearches } from '../../Services/recentSearches.js';
 import { Container , Img , Div , P , List , City } from './Error.style.js';
 
 function Error(){    
     const [ recentSearches ] = useSetRecentSearches();
-    const list = [];
-    const randomNum = () => Math.floor(Math.random() * recentSearches.length);
-    const set = () =>{
-        const city = recentSearches[randomNum()];
-        if( list.length === 3 ) list.splice(-1);
-        if( !list[city] ) list.push(city);       
+    const [ list , setList ] = useState([]);
+    const randomCity = () =>{ 
+        const randomIndex = Math.floor(Math.random() * recentSearches.length);
+        return recentSearches[randomIndex];
     }
+    const set = () =>{
+        const cities = [ ...list ];
+        while( cities.length <= 3 ){
+            const city = randomCity();
+            if( !cities.includes(city) ) cities.unshift(city);
+        }
+        
+        if( cities.length === 4 ) cities.splice(-1);
+        setList(cities);
+    }
+    useEffect( ()=>{
+        set();
+    },[])
     useEffect( ()=>{
         set();
     },[recentSearches] )
